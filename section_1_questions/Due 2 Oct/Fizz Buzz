@@ -1,0 +1,24 @@
+def fizzBuzz(n):
+    pass
+
+def testFizzBuzz():
+    print('Testing fizzBuzz()...', end='')
+    assert(fizzBuzz(21) == 'fizz')
+    assert(fizzBuzz(25) == 'buzz')
+    assert(fizzBuzz(30) == 'fizzBuzz')
+    assert(fizzBuzz(31) == 31)
+
+    # should work for negatives:
+    assert(fizzBuzz(-240) == 'fizzBuzz')
+    assert(fizzBuzz(-245) == 'buzz')
+    assert(fizzBuzz(-246) == 'fizz')
+    assert(fizzBuzz(-247) == -247)
+
+    # and 0 (which is a multiple of 3 and a multiple of 5):
+    assert(fizzBuzz(0) == 'fizzBuzz')
+    print('Passed!')
+
+def main():
+    testFizzBuzz()
+
+main()

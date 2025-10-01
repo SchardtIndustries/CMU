@@ -1,0 +1,20 @@
+def chicagoHour(parisHour):
+    return 42
+
+def testChicagoHour():
+    print('Testing chicagoHour()...', end='')
+    assert(chicagoHour(0) == 5)
+    assert(chicagoHour(3) == 8)
+    assert(chicagoHour(7) == 12)
+    assert(chicagoHour(8) == 1)
+    assert(chicagoHour(12) == 5)
+    assert(chicagoHour(15) == 8)
+    assert(chicagoHour(19) == 12)
+    assert(chicagoHour(20) == 1)
+    assert(chicagoHour(23) == 4)
+    print('Passed!')
+
+def main():
+    testChicagoHour()
+
+main()

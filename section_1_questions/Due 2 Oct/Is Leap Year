@@ -1,0 +1,18 @@
+def isLeapYear(year):
+    pass
+
+def testIsLeapYear():
+    print('Testing isLeapYear()...', end='')
+    assert(isLeapYear(2024) == True)
+    assert(isLeapYear(2023) == False)
+    assert(isLeapYear(2020) == True)
+    assert(isLeapYear(1900) == False)  # divisible by 100 but not by 400
+    assert(isLeapYear(2000) == True)   # divisible by 100 but also by 400
+    assert(isLeapYear(-2024) == False) # non-positive years are not leap years
+    assert(isLeapYear(0) == False)     # non-positive years are not leap years
+    print('Passed!')
+
+def main():
+    testIsLeapYear()
+
+main()

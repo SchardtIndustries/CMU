@@ -1,0 +1,42 @@
+def handToDice(hand):
+    return 42
+
+def diceToOrderedHand(a, b, c):
+    return 42
+
+def playStep2(hand, dice):
+    return 42
+
+def score(hand):
+    return 42
+
+def playThreeDiceYahtzee(dice):
+    return 42
+
+def testPlayThreeDiceYahtzee():
+    print('Testing playThreeDiceYahtzee()...', end='')
+    assert(handToDice(123) == (1,2,3))
+    assert(handToDice(214) == (2,1,4))
+    assert(handToDice(422) == (4,2,2))
+
+    assert(diceToOrderedHand(1,2,3) == 321)
+    assert(diceToOrderedHand(1,4,2) == 421)
+
+    assert(playStep2(413, 2312) == (421, 23))
+    assert(playStep2(544, 23) == (443, 2))
+    assert(playStep2(544, 456) == (644, 45))
+
+    assert(score(432) == 4)
+    assert(score(443) == 10+4+4)
+    assert(score(633) == 10+3+3)
+    assert(score(555) == 20+5+5+5)
+
+    assert(playThreeDiceYahtzee(2312413) == (432, 4))
+    assert(playThreeDiceYahtzee(2633413) == (633, 16))
+    assert(playThreeDiceYahtzee(2333555) == (555, 35))
+    print('Passed!')
+
+def main():
+    testPlayThreeDiceYahtzee()
+
+main()

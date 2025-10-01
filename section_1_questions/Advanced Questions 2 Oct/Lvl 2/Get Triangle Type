@@ -1,0 +1,18 @@
+def getTriangleType(a, b, c):
+    pass
+
+def testGetTriangleType():
+    print('Testing getTriangleType()...', end='')
+    assert(getTriangleType(5, 6, 7) == 'scalene')
+    assert(getTriangleType(7, 5, 6) == 'scalene')
+    assert(getTriangleType(6, 5, 5) == 'isosceles')
+    assert(getTriangleType(5, 6, 5) == 'isosceles')
+    assert(getTriangleType(5, 5, 6) == 'isosceles')
+    assert(getTriangleType(7, 7, 7) == 'equilateral')
+    assert(getTriangleType(1, 2, 3) == 'illegal')
+    print('Passed!')
+
+def main():
+    testGetTriangleType()
+
+main()

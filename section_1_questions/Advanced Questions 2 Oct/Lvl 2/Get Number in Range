@@ -1,0 +1,20 @@
+def getNumberDescription(n):
+    pass
+
+def testGetNumberDescription():
+    print('Testing getNumberDescription()...', end='')
+    assert(getNumberDescription(124)   == 'even int')
+    assert(getNumberDescription(123)   == 'odd int')
+    assert(getNumberDescription(-124)  == 'even int')
+    assert(getNumberDescription(-123)  == 'odd int')
+    assert(getNumberDescription(-1.2)  == 'negative float')
+    assert(getNumberDescription(1.2)   == 'non-negative float')
+    assert(getNumberDescription(0.0)   == 'non-negative float')
+    assert(getNumberDescription(0)     == 'even int')
+    assert(getNumberDescription('yes') == 'not a number')
+    print('Passed!')
+
+def main():
+    testGetNumberDescription()
+
+main()

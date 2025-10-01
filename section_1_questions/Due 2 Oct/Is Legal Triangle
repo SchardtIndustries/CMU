@@ -1,0 +1,19 @@
+def isLegalTriangle(s1, s2, s3):
+    return 42
+
+def testIsLegalTriangle():
+    print('Testing isLegalTriangle()...', end='')
+    assert(isLegalTriangle(8, 6, 7) == True)
+    assert(isLegalTriangle(3.0, 4.0, 5) == True)
+    assert(isLegalTriangle(4, 2, 3) == True)
+    assert(isLegalTriangle(2, 4, 3) == True)
+    assert(isLegalTriangle(2, 3, 5) == False)
+    assert(isLegalTriangle(0, 1, 2) == False)
+    assert(isLegalTriangle(-1, -2.0, -5) == False)
+    assert(isLegalTriangle(2, 2, 9) == False)
+    print('Passed!')
+
+def main():
+    testIsLegalTriangle()
+
+main()

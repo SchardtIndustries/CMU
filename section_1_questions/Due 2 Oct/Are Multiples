@@ -1,0 +1,22 @@
+def areMultiples(x, y):
+    pass
+
+def testAreMultiples():
+    print('Testing areMultiples()...', end='')
+    assert(areMultiples(2, 4) == True)      # 4 is a multiple of 2
+    assert(areMultiples(400, 200) == True)  # 400 is a multiple of 200
+    assert(areMultiples(0, 100) == True)    # 0 is a multiple of 100
+    assert(areMultiples(123, 0) == True)    # 0 is a multiple of 123
+    assert(areMultiples(888, 888) == True)  # 888 is a multiple of itself
+    assert(areMultiples(-50, 100) == True)  # 100 is a multiple of -50
+    assert(areMultiples(50, -100) == True)  # -100 is a multiple of 50
+    assert(areMultiples(-50, -100) == True) # -100 is a multiple of -50
+    assert(areMultiples(400, 250) == False)
+    assert(areMultiples(3, 100) == False)
+    assert(areMultiples(-3, 100) == False)
+    print('Passed!')
+
+def main():
+    testAreMultiples()
+
+main()

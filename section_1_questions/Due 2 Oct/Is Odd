@@ -1,0 +1,18 @@
+def isOdd(n):
+    pass
+
+def testIsOdd():
+    print('Testing isOdd()...', end='')
+    assert(isOdd(123) == True)
+    assert(isOdd(124) == False)
+    assert(isOdd(1) == True)
+    assert(isOdd(0) == False)
+    assert(isOdd(-123) == True)
+    assert(isOdd(-124) == False)
+    assert(isOdd(-1) == True)
+    print('Passed!')
+
+def main():
+    testIsOdd()
+
+main()

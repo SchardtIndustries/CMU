@@ -1,0 +1,23 @@
+def almostEqual(x, y):
+    return (abs(x - y) < 10**-9)
+
+
+def getInRange(x, bound1, bound2):
+    return 42
+
+def testGetInRange():
+    print('Testing getInRange()...', end='')
+    assert(getInRange(1, 3, 5) == 3)
+    assert(getInRange(4, 3, 5) == 4)
+    assert(getInRange(6, 5, 3) == 5)
+    assert(getInRange(5, 5, 3) == 5)
+    assert(getInRange(-1, -3, -5) == -3)
+    assert(getInRange(-4, -5, -3) == -4)
+    assert(getInRange(-6, -6, -3) == -6)
+    assert(almostEqual(getInRange(6.2, 6.3, 6.4), 6.3))
+    print('Passed!')
+
+def main():
+    testGetInRange()
+
+main()
