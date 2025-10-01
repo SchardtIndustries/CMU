@@ -1,5 +1,19 @@
 def fizzBuzz(n):
-    pass
+    """
+    This function takes an integer n and returns:
+    - 'fizz' if n is a multiple of 3,
+    - 'buzz' if n is a multiple of 5,
+    - 'fizzBuzz' if n is a multiple of both 3 and 5,
+    - n itself if none of the above conditions are met.
+    """
+    if n % 3 == 0 and n % 5 == 0:
+        return 'fizzBuzz'
+    elif n % 3 == 0:
+        return 'fizz'
+    elif n % 5 == 0:
+        return 'buzz'
+    else:
+        return n
 
 def testFizzBuzz():
     print('Testing fizzBuzz()...', end='')

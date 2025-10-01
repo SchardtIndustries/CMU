@@ -1,5 +1,7 @@
 def isOdd(n):
-    pass
+    if n % 2 != 0:
+        return True
+    return False
 
 def testIsOdd():
     print('Testing isOdd()...', end='')

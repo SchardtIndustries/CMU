@@ -1,5 +1,11 @@
 def areMultiples(x, y):
-    pass
+    """
+    This function takes two integers, x and y, and returns True if one is a multiple of the other.
+    It returns False otherwise. Note that 0 is considered a multiple of every integer.
+    """
+    if x == 0 or y == 0:
+        return True
+    return x % y == 0 or y % x == 0
 
 def testAreMultiples():
     print('Testing areMultiples()...', end='')

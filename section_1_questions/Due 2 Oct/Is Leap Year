@@ -1,5 +1,16 @@
 def isLeapYear(year):
-    pass
+    """
+    This function takes an integer year and returns True if it is a leap year, False otherwise.
+    A year is a leap year if it is divisible by 4, except for end-of-century years which must be divisible by 400.
+    Non-positive years are not considered leap years.
+    """
+    if year <= 0:
+        return False
+    if year % 4 != 0:
+        return False
+    if year % 100 == 0 and year % 400 != 0:
+        return False
+    return True
 
 def testIsLeapYear():
     print('Testing isLeapYear()...', end='')
