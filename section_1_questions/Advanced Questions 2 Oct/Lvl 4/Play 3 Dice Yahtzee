@@ -1,17 +1,66 @@
 def handToDice(hand):
-    return 42
+    a = hand // 100
+    b = (hand // 10) % 10
+    c = hand % 10
+    return (a, b, c)
 
 def diceToOrderedHand(a, b, c):
-    return 42
+    return max(a, b, c) * 100 + sorted([a, b, c])[1] * 10 + min(a, b, c)
+
+def getNewDie(dice):
+    newDice = dice % 10
+    dice = dice // 10
+    kept = newDice
+    return (kept, dice)
 
 def playStep2(hand, dice):
-    return 42
+    kept1, kept2, kept3 = 0, 0, 0 # dice to keep
+    a, b, c = handToDice(hand)
+    if a == b:
+        kept1 = a
+        kept2 = b
+    if b == c:
+        kept2 = b
+        kept3 = c
+    if a == c:
+        kept1 = a
+        kept3 = c
+    if kept1 == 0 and kept2 == 0 and kept3 == 0:
+        kept1 = max(a, b, c)
+    if kept2 == 0 and kept3 == 0:
+        kept2, dice = getNewDie(dice)
+        kept3, dice = getNewDie(dice)
+    elif kept1 == 0:
+        kept1, dice = getNewDie(dice)
+    elif kept2 == 0:
+        kept2, dice = getNewDie(dice)
+    elif kept3 == 0:
+        kept3, dice = getNewDie(dice)
+    return (diceToOrderedHand(kept1, kept2, kept3), dice)
+
 
 def score(hand):
-    return 42
+    a, b, c = handToDice(hand)
+    if a != b and b != c and a != c:
+        score = max(a, b, c)
+    elif a == b:
+        score = 10 + a + b
+    elif b == c:
+        score = 10 + b + c
+    elif a == c:
+        score = 10 + a + c
+    if a == b and b == c:
+        score = 20 + a + b + c
+    return score
 
 def playThreeDiceYahtzee(dice):
-    return 42
+    a, dice = getNewDie(dice)
+    b, dice = getNewDie(dice)
+    c, dice = getNewDie(dice)
+    hand = diceToOrderedHand(a, b, c)
+    hand, dice = playStep2(hand, dice)
+    hand, dice = playStep2(hand, dice)
+    return (hand, score(hand))
 
 def testPlayThreeDiceYahtzee():
     print('Testing playThreeDiceYahtzee()...', end='')

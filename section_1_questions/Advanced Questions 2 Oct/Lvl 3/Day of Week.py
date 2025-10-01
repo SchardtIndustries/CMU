@@ -1,13 +1,19 @@
 import math
 
 def dayOfWeek(month, day, year):
+    # Zeller's Congruence algorithm to calculate the day of the week
     if month < 3:
         month += 12
         year -= 1
-    k = year % 100
-    j = year // 100
-    f = day + math.floor((13 * (month + 1)) / 5) + k + math.floor(k / 4) + math.floor(j / 4) - (2 * j)
-    return ((f % 7) + 7) % 7 + 1
+    q = day
+    m = month
+    K = year % 100
+    J = year // 100
+    f = q + (13 * (m + 1)) // 5 + K + (K // 4) + (J // 4) - (2 * J)
+    day = (f % 7 + 7) % 7
+    if day == 0:
+        day = 7
+    return day
 
 def testDayOfWeek():
     print('Testing dayOfWeek()...', end='')

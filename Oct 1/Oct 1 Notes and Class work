@@ -1,5 +1,52 @@
-x = 2
+"""
+Know yourself and your goals
+    Combine your interests, values, skills, and previous career experience
+    What languages and tools are you proficient in?
+    What types of projects have you worked on?
+    What industries or domains are you interested in?
+    What languages and tools do those industries use?
 
-y = 3
+Understand the job market
 
-print(x + (10 if y % 2 == 0 else 5))
+Prepare effective job search material
+
+Connect with advocates and decision makers
+
+Be strategic, persistent, and adaptable
+
+https://docs.google.com/document/d/1saVDqZa3WppSn3gUr5weOOcmQ8OLvgT3OdLL4p_UTpQ/edit?tab=t.0
+
+WHAT DO I KNOW ABOUT WHAT IM INTERESTED IN, WHAT I MAY BE INTERESTED IN, AND WHAT I WANT TO DO?
+
+What kind of role do i want?
+    Do i want to be front end? backend? full stack?
+    Do i know what i want to be?
+    Do i want to be a developer? data scientist? analyst? product manager? designer?
+    Do i want to work in a team? alone? remote? in person?
+    Do i want to work for a big company? small company? startup? non-profit?
+    jennifer.y@talentsprint.com
+
+"""
+def addCheese(cheese):
+    getCheese()
+    putItemOnSlicedBread(cheese)
+    return
+def addMeat(meat):
+    getMeat()
+    putItemOnSlicedBread(meat)
+    return
+
+def sliceBread():
+    getKinife()
+    getBread()
+    getCuttingBoard()
+    return slicedBread
+    
+
+def makeSandwich(bread, meat, cheese, toppings):
+    sliceBread(bread)
+    addMeat(meat)
+    addCheese(cheese)
+    addToppings(toppings)
+    cutSandwich()
+    return sandwich
