@@ -14,43 +14,37 @@ def getNewDie(dice):
     return (kept, dice)
 
 def playStep2(hand, dice):
-    kept1, kept2, kept3 = 0, 0, 0 # dice to keep
     a, b, c = handToDice(hand)
-    if a == b:
-        kept1 = a
-        kept2 = b
-    if b == c:
-        kept2 = b
-        kept3 = c
-    if a == c:
-        kept1 = a
-        kept3 = c
-    if kept1 == 0 and kept2 == 0 and kept3 == 0:
-        kept1 = max(a, b, c)
-    if kept2 == 0 and kept3 == 0:
-        kept2, dice = getNewDie(dice)
-        kept3, dice = getNewDie(dice)
-    elif kept1 == 0:
-        kept1, dice = getNewDie(dice)
-    elif kept2 == 0:
-        kept2, dice = getNewDie(dice)
-    elif kept3 == 0:
-        kept3, dice = getNewDie(dice)
-    return (diceToOrderedHand(kept1, kept2, kept3), dice)
+    if a == b and b == c:  #all three dice match
+        return (hand, dice)
+    else:
+        if a == b:
+            c, dice = getNewDie(dice)
+        elif b == c:
+            a, dice = getNewDie(dice)
+        elif a == c:
+            b, dice = getNewDie(dice)
+        else:  #no matching die
+            a = max(a, b, c)
+            b, dice = getNewDie(dice)
+            c, dice = getNewDie(dice)
+    return (diceToOrderedHand(a, b, c), dice)
+
 
 
 def score(hand):
     a, b, c = handToDice(hand)
     if a != b and b != c and a != c:
         score = max(a, b, c)
+    elif a == b and b == c:
+        score = 20 + a + b + c
     elif a == b:
         score = 10 + a + b
     elif b == c:
         score = 10 + b + c
     elif a == c:
         score = 10 + a + c
-    if a == b and b == c:
-        score = 20 + a + b + c
+
     return score
 
 def playThreeDiceYahtzee(dice):
@@ -64,6 +58,11 @@ def playThreeDiceYahtzee(dice):
 
 def testPlayThreeDiceYahtzee():
     print('Testing playThreeDiceYahtzee()...', end='')
+
+    assert(getNewDie(2312) == (2, 231))
+    assert(getNewDie(23) == (3, 2))
+    assert(getNewDie(2) == (2, 0))
+
     assert(handToDice(123) == (1,2,3))
     assert(handToDice(214) == (2,1,4))
     assert(handToDice(422) == (4,2,2))
