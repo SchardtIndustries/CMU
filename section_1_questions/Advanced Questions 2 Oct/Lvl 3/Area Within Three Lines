@@ -1,0 +1,42 @@
+def almostEqual(x, y):
+    return (abs(x - y) < 10**-9)
+
+
+def areaWithinThreeLines(m1, b1, m2, b2, m3, b3):
+    # Check if any two lines are parallel
+    if m1 == m2 or m1 == m3 or m2 == m3:
+        return None
+
+    # Calculate intersection points
+    x12 = (b2 - b1) / (m1 - m2)
+    y12 = m1 * x12 + b1
+
+    x13 = (b3 - b1) / (m1 - m3)
+    y13 = m1 * x13 + b1
+
+    x23 = (b3 - b2) / (m2 - m3)
+    y23 = m2 * x23 + b2
+
+    # Calculate the area using the determinant method
+    area = abs((x12 * (y13 - y23) + x13 * (y23 - y12) + x23 * (y12 - y13)) / 2.0)
+    return area
+
+def testAreaWithinThreeLines():
+    print('Testing areaWithinThreeLines()...', end='')
+    assert(almostEqual(areaWithinThreeLines(0, 7, 1, 0, -1, 2), 36))
+    assert(almostEqual(areaWithinThreeLines(1, -5, 0, -2, 2, 2), 25))
+    assert(almostEqual(areaWithinThreeLines(0, -9.75, -6, 2.25, 1, -4.75), 21))
+    assert(almostEqual(areaWithinThreeLines(1, -5, 0, -2, 2, 25), 272.25))
+    assert(almostEqual(areaWithinThreeLines(1, 2, 3, 4, 5, 6), 0))
+
+    # The first two lines are parallel:
+    assert(areaWithinThreeLines(1, 2, 1, 4, 0, 7) == None)
+
+    # Here, the second and third lines are parallel
+    assert(areaWithinThreeLines(5, 2, 1, 4, 1, 6) == None)
+    print('Passed!')
+
+def main():
+    testAreaWithinThreeLines()
+
+main()

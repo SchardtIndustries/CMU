@@ -1,5 +1,22 @@
 def chicagoHour(parisHour):
-    return 42
+    chicagoTime = 0
+    timeDifference = 5 # Paris is 5 hours ahead of Chicago
+    avoidMilitaryTime = 12 #avoids military time
+    if parisHour >= avoidMilitaryTime:
+        parisHour -= avoidMilitaryTime
+        chicagoTime = parisHour + timeDifference
+        if chicagoTime > avoidMilitaryTime:
+            chicagoTime -= avoidMilitaryTime
+            return chicagoTime
+        else:
+            return chicagoTime
+    else:
+        chicagoTime = parisHour + timeDifference
+        if chicagoTime > avoidMilitaryTime:
+            chicagoTime -= avoidMilitaryTime
+            return chicagoTime
+        else:
+            return chicagoTime
 
 def testChicagoHour():
     print('Testing chicagoHour()...', end='')

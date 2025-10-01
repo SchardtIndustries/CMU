@@ -1,7 +1,13 @@
 import math
 
 def dayOfWeek(month, day, year):
-    return 42
+    if month < 3:
+        month += 12
+        year -= 1
+    k = year % 100
+    j = year // 100
+    f = day + math.floor((13 * (month + 1)) / 5) + k + math.floor(k / 4) + math.floor(j / 4) - (2 * j)
+    return ((f % 7) + 7) % 7 + 1
 
 def testDayOfWeek():
     print('Testing dayOfWeek()...', end='')

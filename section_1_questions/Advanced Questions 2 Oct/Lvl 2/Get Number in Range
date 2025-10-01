@@ -1,5 +1,16 @@
 def getNumberDescription(n):
-    pass
+    if type(n) not in [int, float]:
+        return 'not a number'
+    if type(n) is int:
+        if n % 2 == 0:
+            return 'even int'
+        else:
+            return 'odd int'
+    if type(n) is float:
+        if n < 0:
+            return 'negative float'
+        else:
+            return 'non-negative float'
 
 def testGetNumberDescription():
     print('Testing getNumberDescription()...', end='')

@@ -3,7 +3,14 @@ def almostEqual(x, y):
 
 
 def getInRange(x, bound1, bound2):
-    return 42
+    lowerBound = min(bound1, bound2)
+    upperBound = max(bound1, bound2)
+    if x < lowerBound:
+        return lowerBound
+    elif x > upperBound:
+        return upperBound
+    else:
+        return x
 
 def testGetInRange():
     print('Testing getInRange()...', end='')
