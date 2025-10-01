@@ -26,7 +26,7 @@ What kind of role do i want?
     Do i want to work for a big company? small company? startup? non-profit?
     jennifer.y@talentsprint.com
 
-"""
+
 def addCheese(cheese):
     getCheese()
     putItemOnSlicedBread(cheese)
@@ -50,3 +50,5 @@ def makeSandwich(bread, meat, cheese, toppings):
     addToppings(toppings)
     cutSandwich()
     return sandwich
+
+"""
