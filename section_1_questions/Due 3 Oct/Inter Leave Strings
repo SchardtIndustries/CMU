@@ -1,0 +1,36 @@
+"""Write the function sameChars(s1, s2) which takes two strings and returns True if the two 
+strings are composed of the same characters (regardless of order and number of occurrences). 
+For example, sameChars('abc', 'bac') returns True because both strings are composed of the same characters 
+('a', 'b', and 'c'). Similarly, sameChars('aabcab', 'abcb') also returns True since both strings are composed of the 
+same characters ('a', 'b', and 'c').
+
+This test is case-sensitive, so sameChars('ABC', 'abc') returns False.
+
+Note: The function returns False if either parameter is not a string, but returns True if both strings are empty."""
+
+def sameChars(s1, s2):
+    if not isinstance(s1, str) or not isinstance(s2, str):
+        return False
+    if s1 == '' and s2 == '':
+        return True
+    return set(s1) == set(s2)
+
+
+def testSameChars():
+    print('Testing sameChars()...', end='')
+    assert(sameChars('abc', 'bac') == True)
+    assert(sameChars('aaaaabbbbbbccccc', 'abc') == True)
+    assert(sameChars('abc', 'ba') == False)
+    assert(sameChars('ba', 'abc') == False)
+    assert(sameChars('AAAAAAaaaa', 'Aa') == True)
+    assert(sameChars('NNN', 'n') == False)
+    assert(sameChars('123', '123') == True)
+    assert(sameChars('', 'a') == False)
+    assert(sameChars('', '') == True)
+    assert(sameChars(14, '14') == False)
+    print('Passed!')
+
+def main():
+    testSameChars()
+
+main()

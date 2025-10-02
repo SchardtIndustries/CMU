@@ -1,0 +1,31 @@
+"""Write the function largestNumber(text) which takes a string of text and returns the 
+largest integer value that occurs within the text, or None if no such value occurs. 
+You may assume that the only numbers in the text are non-negative integers separated by spaces, 
+and that numbers are always composed of consecutive digits without commas.
+
+For example, largestNumber('I saw 3 dogs, 17 cats, and 14 cows!') returns the integer 17, 
+and largestNumber('One person ate two hot dogs!') returns None."""
+
+def largestNumber(text):
+    numbers = [int(word) for word in text.split() if word.isdigit()]
+    return max(numbers) if numbers else None
+
+def testLargestNumber():
+    print('Testing largestNumber()...', end='')
+    assert(largestNumber('I saw 3 dogs, 17 cats, and 14 cows!') == 17)
+    assert(largestNumber('One person ate two hot dogs!') == None)
+    assert(largestNumber('There are no numbers in this text.') == None)
+    assert(largestNumber('I have 2 cats, but the shelter has 20') == 20)
+    text = 'It is 82 degrees Fahrenheit, which is 28 degree Celsius.'
+    assert(largestNumber(text) == 82)
+    text = 'Not one of my 10 penguins are taller than 2 feet 11 inches.'
+    assert(largestNumber(text) == 11)
+    assert(largestNumber('15-112 is also 112 and is my favorite class.') == 112)
+    assert(largestNumber('0 classifies as an integer') == 0)
+    assert(largestNumber('') == None)
+    print('Passed!')
+
+def main():
+    testLargestNumber()
+
+main()

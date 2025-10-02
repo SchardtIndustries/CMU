@@ -1,0 +1,64 @@
+"""
+Background: This exercise concerns "UPC Barcodes". Specifically, an older kind called UPC_A, which looks like this:
+
+
+
+At the bottom, the barcode includes 12 digits (these are actually encoded in a computer-readable form above them).
+
+The first 11 digits are the barcode value. The 12th and last digit, on the right, is the so-called "check digit". 
+The check digit is computed from the other digits, and is included as a way to check if an error occurred while reading the bars.
+
+Here is how we compute the check digit based on the first 11 digits:
+
+First, find this sum: (3*digit0) + digit1 + (3*digit2) + digit3 + ....
+See how we take three times each other digit, but use just the digit itself for the others.
+Be sure not to include the 12th digit. This is only for the first 11 digits (after all, we are using this to compute the 12th digit).
+Next, find the ones digit of that sum. This is the "checkCode".
+The "checkDigit" (the result) is just (10 - checkCode), except if this is 10, then the checkDigit is 0.
+For example, consider the barcode in the image above: 0 36000 29145 2:
+
+The sum is 3*0 + 3 + 3*6 + 0 + 3*0 + 0 + 3*2 + 9 + 3*1 + 4 + 3*5
+= 0 + 3 + 18 + 0 + 0 + 0 + 6 + 9 + 3 + 4 + 15
+
+= 58. 2. The "checkCode" is the ones digit of 58. This is 8. 3. The "checkDigit" is (10 - checkCode) = (10 - 8) = 2.
+
+This is not 10, so the result is 2.
+
+And, happily, this matches the check digit in the actual barcode!
+
+With this in mind, write the function addUpcBarcodeCheckDigit(barcode) that takes a string 11 digits that represents the 
+first 11 digits of a UPC_A barcode. Your function should return a complete 12-digit barcode which is the original barcode with an 
+additional character added, the check digit.
+
+Note that both the argument and the result are strings of digits rather than ints.
+"""
+def addUpcBarcodeCheckDigit(barcode):
+    if len(barcode) != 11 or not barcode.isdigit():
+        raise ValueError("Input must be a string of 11 digits.")
+    
+    total_sum = 0
+    for i, char in enumerate(barcode):
+        digit = int(char)
+        if i % 2 == 0:  # even index
+            total_sum += 3 * digit
+        else:           # odd index
+            total_sum += digit
+    
+    check_code = total_sum % 10
+    check_digit = (10 - check_code) % 10
+    
+    return barcode + str(check_digit)
+
+def testAddUpcBarcodeCheckDigit():
+    print('Testing addUpcBarcodeCheckDigit()...', end='')
+    assert(addUpcBarcodeCheckDigit('03600029145') == '036000291452')
+    assert(addUpcBarcodeCheckDigit('11111111111') == '111111111117')
+    assert(addUpcBarcodeCheckDigit('23232323232') == '232323232329')
+    assert(addUpcBarcodeCheckDigit('12345678900') == '123456789005')
+    assert(addUpcBarcodeCheckDigit('00000000000') == '000000000000')
+    print('Passed!')
+
+def main():
+    testAddUpcBarcodeCheckDigit()
+
+main()

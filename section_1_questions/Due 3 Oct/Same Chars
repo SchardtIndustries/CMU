@@ -1,0 +1,35 @@
+"""Write the function interleaveStrings(s1, s2) that takes two strings, s1 and s2, and returns a string 
+composed of alternating characters from s1 and s2 (that is, it interleaves s1 and s2).
+
+For example, interleaveStrings('pto', 'yhn') returns the string 'python'. If one string is longer than the other, 
+concatenate the rest of the remaining string onto the end of the new string. 
+For example interleaveStrings('ab', 'xyz?') returns the string 'axbyz?'."""
+
+def interleaveStrings(s1, s2):
+    result = []
+    min_length = min(len(s1), len(s2))
+    
+    for i in range(min_length):
+        result.append(s1[i])
+        result.append(s2[i])
+    
+    result.append(s1[min_length:])
+    result.append(s2[min_length:])
+    
+    return ''.join(result)
+
+def testInterleaveStrings():
+    print('Testing interleaveStrings()...', end='')
+    assert(interleaveStrings('pto', 'yhn') == 'python')
+    assert(interleaveStrings('ab', 'xyz?') == 'axbyz?')
+    assert(interleaveStrings('a', 'b') == 'ab')
+    assert(interleaveStrings('xyz', 'a b') == 'xay zb')
+    assert(interleaveStrings('', 'cpcs1') == 'cpcs1')
+    assert(interleaveStrings('cpcs1', '') == 'cpcs1')
+    assert(interleaveStrings('', '') == '')
+    print('Passed!')
+
+def main():
+    testInterleaveStrings()
+
+main()

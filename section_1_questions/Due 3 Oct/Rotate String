@@ -1,0 +1,27 @@
+"""Write the function rotateString(s, k) which takes a string s and a possibly-negative int k. If k is non-negative, the function returns s rotated k places to the left. If k is negative, the function returns s rotated |k| places to the right.
+
+For example, rotateString('abcd', 1) will return 'bcda', and rotateString('abcd', -1) will return 'dabc'."""
+
+def rotateString(s, k):
+    if not s:
+        return s
+    k = k % len(s)
+    if k >= 0:
+        return s[k:] + s[:k]
+    else:
+        return s[k:] + s[:k]
+    
+def testRotateString():
+    print('Testing rotateString()...', end='')
+    assert(rotateString('abcd',  1) == 'bcda')
+    assert(rotateString('abcd', -1) == 'dabc')
+    assert(rotateString('efgh', 4) == 'efgh')
+    assert(rotateString('coffee', 2) == 'ffeeco')
+    assert(rotateString('112cmu', -3) == 'cmu112')
+    assert(rotateString('water', -9) == 'aterw')
+    print('Passed!')
+
+def main():
+    testRotateString()
+
+main()

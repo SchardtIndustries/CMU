@@ -1,0 +1,26 @@
+"""Write the function vowelCount(s) which takes a string s, and returns the number of vowels in s. 
+Ignore case, so 'A' and 'a' are both vowels. The vowels are 'a', 'e', 'i', 'o', and 'u'.
+
+For example, vowelCount('Abc def!!! a? yzyzyz!') returns 3 (two a's and one e)."""
+
+def vowelCount(s):
+    count = 0
+    vowels = 'aeiouAEIOU'
+    for char in s:
+        if char in vowels:
+            count += 1
+    return count
+
+def testVowelCount():
+    print('Testing vowelCount()...', end='')
+    assert(vowelCount('Abc def!!! a? yzyzyz!') == 3)
+    assert(vowelCount('Hi! How are you?') == 6)
+    assert(vowelCount('AAAEEEiOL') == 8)
+    assert(vowelCount('Rhythm') == 0)
+    assert(vowelCount('WHY, TRY SHY FLY RHYTHMS SLYLY.') == 0)
+    print('Passed!')
+
+def main():
+    testVowelCount()
+
+main()
