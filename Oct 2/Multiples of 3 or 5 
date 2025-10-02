@@ -1,0 +1,123 @@
+"""
+find the sum of all multiples of 3 or 5 below 1000
+"""
+def findSum(num):
+    total = 0
+    for i in range(num):
+        if i % 3 == 0 or i % 5 == 0:
+            total += i
+    return total
+
+def findSum2(num):
+    return sum(i for i in range(num) if i % 3 == 0 or i % 5 == 0)
+
+def findSum3(num):
+    return sum(i for i in range(num) if not (i % 3 and i % 5))
+
+def findSum4(num):
+    total = 0
+    for i in range(0, num, 3):
+        total += i
+    for i in range(0, num, 5):
+        if i % 3 != 0:
+            total += i
+    return total
+
+def findSum5(num):
+    return sum(filter(lambda x: x % 3 == 0 or x % 5 == 0, range(num)))
+
+def findSum6(num):
+    return sum(filter(lambda x: not (x % 3 and x % 5), range(num)))
+
+def findSum7(num):
+    return sum(set(range(0, num, 3)).union(set(range(0, num, 5))))
+
+def findSum8(num):
+    return sum(set(range(0, num, 3)) | set(range(0, num, 5)))
+
+def findSum9(num):
+    total = 0
+    num -= 1
+    while num > 0: 
+        if num % 3 == 0:
+            total += num
+        elif num % 5 == 0:
+            total += num
+        num -= 1
+    return total
+
+
+def testFindSum():
+    assert(findSum(10) == 23)
+    assert(findSum(1000) == 233168)
+    assert(findSum(0) == 0)
+    assert(findSum(3) == 0)
+    assert(findSum(5) == 3)
+    assert(findSum(6) == 8)
+
+    assert(findSum2(10) == 23)
+    assert(findSum2(1000) == 233168)
+    assert(findSum2(0) == 0)
+    assert(findSum2(3) == 0)
+    assert(findSum2(5) == 3)
+    assert(findSum2(6) == 8)
+    
+    assert(findSum3(10) == 23)
+    assert(findSum3(1000) == 233168)
+    assert(findSum3(0) == 0)
+    assert(findSum3(3) == 0)
+    assert(findSum3(5) == 3)
+    assert(findSum3(6) == 8)
+
+    assert(findSum4(10) == 23)
+    assert(findSum4(1000) == 233168)
+    assert(findSum4(0) == 0)
+    assert(findSum4(3) == 0)
+    assert(findSum4(5) == 3)
+    assert(findSum4(6) == 8)    
+    
+    assert(findSum5(10) == 23)
+    assert(findSum5(1000) == 233168)
+    assert(findSum5(0) == 0)
+    assert(findSum5(3) == 0)
+    assert(findSum5(5) == 3)
+    assert(findSum5(6) == 8)    
+
+    assert(findSum6(10) == 23)
+    assert(findSum6(1000) == 233168)
+    assert(findSum6(0) == 0)
+    assert(findSum6(3) == 0)
+    assert(findSum6(5) == 3)
+    assert(findSum6(6) == 8)
+
+    assert(findSum7(10) == 23)
+    assert(findSum7(1000) == 233168)
+    assert(findSum7(0) == 0)    
+    assert(findSum7(3) == 0)
+    assert(findSum7(5) == 3)
+    assert(findSum7(6) == 8)
+
+    assert(findSum8(10) == 23)
+    assert(findSum8(1000) == 233168)
+    assert(findSum8(0) == 0)
+    assert(findSum8(3) == 0)
+    assert(findSum8(5) == 3)
+    assert(findSum8(6) == 8)
+
+    assert(findSum9(10) == 23)
+    assert(findSum9(1000) == 233168)
+    assert(findSum9(0) == 0)
+    assert(findSum9(3) == 0)
+    assert(findSum9(5) == 3)
+    assert(findSum9(6) == 8)
+
+    print('All test cases pass')
+
+
+def main():
+    testFindSum()
+
+
+if __name__ == '__main__':
+    main()
+

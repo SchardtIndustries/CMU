@@ -9,11 +9,13 @@
 def stripComments(code):
     lines = code.split('\n')
     new_lines = []
+    if code == '':
+        return ''
     for line in lines:
         stripped_line = line.split('#')[0].rstrip()
         if stripped_line.strip() != '':
             new_lines.append(stripped_line)
-    result = '\n'.join(new_lines)
+    result = '\n'.join(new_lines) +"\n"
     return result
 
 def testStripComments():
