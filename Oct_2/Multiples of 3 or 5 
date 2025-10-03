@@ -46,6 +46,12 @@ def findSum9(num):
         num -= 1
     return total
 
+def findSum10(num):
+    total = []
+    for i in range(num):
+        if i % 3 == 0 or i % 5 == 0:
+            total.append(i)
+    return sum(total)
 
 def testFindSum():
     assert(findSum(10) == 23)
@@ -111,6 +117,12 @@ def testFindSum():
     assert(findSum9(5) == 3)
     assert(findSum9(6) == 8)
 
+    assert(findSum10(10) == 23)
+    assert(findSum10(1000) == 233168)
+    assert(findSum10(0) == 0)
+    assert(findSum10(3) == 0)
+    assert(findSum10(5) == 3)
+    assert(findSum10(6) == 8)
     print('All test cases pass')
 
 

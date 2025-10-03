@@ -1,0 +1,38 @@
+"""mmddyyyy => yyyyddd
+Given a string of the form "mmddyyyy", (example: "02072016") compute the seven digit number yyyyddd, 
+where ddd is the  nth  days of the year. For example "02072016" is the  38th  day of the year and 2016038 
+is the expected result; similarly "12201996" -> 1996355"""
+
+import datetime
+
+def nth_day(s:str)->int:
+    month, day, year = int(s[:2]), int(s[2:4]), int(s[4:])
+    date_obj = datetime.datetime(year, month, day)
+    day_of_year = date_obj.timetuple().tm_yday
+    return int(f"{year:04d}{day_of_year:03d}")
+   
+
+
+def testN_thDay():
+    test_cases = [
+        ("02072016", 2016038),      # February 7, 2016
+        ("12201996", 1996355),      # December 20, 1996
+        ("01012000", 2000001),      # January 1, 2000
+        ("12312021", 2021365),      # December 31, 2021
+        ("02292020", 2020060),      # February 29, 2020 (leap year)
+        ("03152015", 2015074),      # March 15, 2015
+        ("07042019", 2019185),      # July 4, 2019
+        ("10102010", 2010283),      # October 10, 2010
+        ("04282019", 2019118),      # April 28, 2019
+        ("12252023", 2023359),      # December 25, 2023
+    ]
+    
+    for date_str, expected in test_cases:
+        result = nth_day(date_str)
+        assert result == expected, f"Test with {date_str} failed: expected {expected}, got {result}"
+    print("all test cases passed")
+
+def main():
+    testN_thDay()
+
+main()

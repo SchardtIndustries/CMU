@@ -75,12 +75,73 @@ Write the function `getEvalSteps(expr)`
  vulnerabilities.
 """
 
+import re
+
 def getEvalSteps(expr):
-    
+    current_expr = expr
+    steps = [f"{expr} = {current_expr}"]
+    # Store original expression for indentation reference
+    original_expr = expr
+    while True:
+        match = None
+        for pattern in [r'\*\*', r'[*/%]', r'[+-]']:
+            match = re.search(pattern, current_expr)
+            if match:
+                break
+        if not match:
+            break  # No more operators
+
+        op_start = match.start()
+
+        # Find left operand
+        left_match = re.search(r'(\d+)$', current_expr[:op_start])
+        left_start, left_end = left_match.start(), left_match.end()
+        left_operand = current_expr[left_start:left_end]
+
+        # Find right operand
+        right_match = re.match(r'^(\d+)', current_expr[op_start + len(match.group()):])
+        right_start = op_start + len(match.group()) + right_match.start()
+        right_end = op_start + len(match.group()) + right_match.end()
+        right_operand = current_expr[right_start:right_end]
+
+        # Compute the result
+        lv, rv = int(left_operand), int(right_operand)
+        if match.group() == '+':
+            result_value = str(lv + rv)
+        elif match.group() == '-':
+            result_value = str(lv - rv)
+        elif match.group() == '*':
+            result_value = str(lv * rv)
+        elif match.group() == '//':
+            result_value = str(lv // rv)
+        elif match.group() == '%':
+            result_value = str(lv % rv)
+        elif match.group() == '**':
+            result_value = str(lv ** rv)
+        else:
+            raise ValueError("Unknown operator.")
+
+        # Build the new expression
+        new_expr = current_expr[:left_start] + result_value + current_expr[right_end:]
+
+        # Indent based on **original** position of operator for alignment
+        indent = ' ' * op_start
+        # Append the step with proper indentation
+        steps.append(f"{indent}= {current_expr}")
+        current_expr = new_expr
+        steps.append(f"{indent}= {current_expr}")
+
+        # If fully evaluated
+        if re.fullmatch(r'\d+', current_expr):
+            break
+    result = '\n'.join(steps)
+    print(result)
+    return result
+
 
 def testGetEvalSteps():
     print('Testing getEvalSteps()...', end='')
-    print('Passed!')
+    
     assert(getEvalSteps('2+3*4-8**3%3') == '''\
 2+3*4-8**3%3 = 2+3*4-512%3
              = 2+12-512%3
@@ -108,6 +169,7 @@ def testGetEvalSteps():
             = 5+1
             = 6
 ''')
+    print('Passed!')
 
 def main():
     testGetEvalSteps()

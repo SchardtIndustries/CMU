@@ -64,7 +64,7 @@ For example, `'SEND + MORE = MONEY'` is
 """
 
 def solvesCryptarithm(puzzle, solution):
-
+    
 
 
 def testSolvesCryptarithm():

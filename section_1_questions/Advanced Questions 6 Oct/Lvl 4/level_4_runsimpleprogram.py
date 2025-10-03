@@ -143,7 +143,7 @@ First, carefully watch this video that describes this problem:
 """
 
 def runSimpleProgram(program, args):
-
+    
 
 def testRunSimpleProgram():
     print('Testing runSimpleProgram()...', end='')
