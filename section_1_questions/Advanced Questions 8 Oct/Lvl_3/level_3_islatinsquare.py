@@ -63,7 +63,25 @@ Original file is located at
 """
 
 def isLatinSquare(L):
-    return 42
+    # Check if L is a list of lists
+    if not isinstance(L, list) or not all(isinstance(row, list) for row in L):
+        return False
+
+    if len(L) == 0 or any(len(row) != len(L) for row in L):
+        return False
+    n = len(L)
+    unique_numbers = set()
+    for row in L:
+        unique_numbers.update(row)
+    if len(unique_numbers) != n:
+        return False
+    for i in range(n):
+        row_set = set(L[i])
+        col_set = set(L[j][i] for j in range(n))
+        if row_set != unique_numbers or col_set != unique_numbers:
+            return False
+    return True
+
 
 def testIsLatinSquare():
     print('Testing isLatinSquare()...', end='')

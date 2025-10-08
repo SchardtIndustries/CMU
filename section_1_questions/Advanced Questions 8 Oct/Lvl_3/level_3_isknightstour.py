@@ -45,7 +45,34 @@ Background: Knights in chess move in “L” shapes. One move
 """
 
 def isKnightsTour(board):
-    return 42
+    n = len(board)
+    if n == 0 or any(len(row) != n for row in board):
+        return False
+
+    # Check if all numbers from 1 to n^2 are present
+    expected_numbers = set(range(1, n * n + 1))
+    actual_numbers = {num for row in board for num in row}
+    if expected_numbers != actual_numbers:
+        return False
+
+    # Possible knight moves
+    knight_moves = [(2, 1), (2, -1), (-2, 1), (-2, -1),
+                    (1, 2), (1, -2), (-1, 2), (-1, -2)]
+
+    # Create a mapping from number to its position
+    position = {}
+    for r in range(n):
+        for c in range(n):
+            position[board[r][c]] = (r, c)
+
+    # Check each move in the tour
+    for i in range(1, n * n):
+        r1, c1 = position[i]
+        r2, c2 = position[i + 1]
+        if not any((r1 + dr == r2 and c1 + dc == c2) for dr, dc in knight_moves):
+            return False
+
+    return True
 
 def testIsKnightsTour():
     print('Testing isKnightsTour()...', end='')

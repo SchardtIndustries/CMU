@@ -61,7 +61,32 @@ dirNames = [ [ 'up-left'  ,  'up' , 'up-right'   ],
 """
 
 def wordSearch(board, word):
-    return 42
+    directions = [(-1, -1), (-1, 0), (-1, 1),
+                  (0, -1),          (0, 1),
+                  (1, -1), (1, 0), (1, 1)]
+    dirNames = [ [ 'up-left'  ,  'up' , 'up-right'   ],
+                 [ 'left'     ,   ''  , 'right'      ],
+                 [ 'down-left', 'down', 'down-right' ] ]
+    
+    rows = len(board)
+    cols = len(board[0]) if rows > 0 else 0
+    
+    for r in range(rows):
+        for c in range(cols):
+            for d in directions:
+                dr, dc = d
+                rr, cc = r, c
+                match = True
+                for i in range(len(word)):
+                    if rr < 0 or rr >= rows or cc < 0 or cc >= cols or board[rr][cc] != word[i]:
+                        match = False
+                        break
+                    rr += dr
+                    cc += dc
+                if match:
+                    dir_name = dirNames[dr + 1][dc + 1]
+                    return f"'{word}' is at ({r}, {c}) heading {dir_name}"
+    return f"'{word}' not found"
 
 def testWordSearch():
     print('Testing wordSearch()...', end='')

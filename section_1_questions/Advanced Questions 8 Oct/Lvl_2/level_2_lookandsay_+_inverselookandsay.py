@@ -51,10 +51,24 @@ Background: When "reading off" the values in a list using the
 """
 
 def lookAndSay(L):
-    return 42
+    if len(L) == 0:
+        return []
+    result = []
+    count = 1
+    for i in range(1, len(L)):
+        if L[i] == L[i - 1]:
+            count += 1
+        else:
+            result.append((count, L[i - 1]))
+            count = 1
+    result.append((count, L[-1]))
+    return result
 
 def inverseLookAndSay(L):
-    return 42
+    result = []
+    for count, value in L:
+        result.extend([value] * count)
+    return result
 
 def testLookAndSay():
     print('Testing lookAndSay()...', end='')

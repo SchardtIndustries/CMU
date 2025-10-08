@@ -216,8 +216,72 @@ Background: We have seen how the condition in an "if" statement is
  right\-paren for the first inner parentheses in `expr`.
 """
 
+def evaluate(expr):
+    # Remove whitespace for easier parsing
+    expr = expr.strip()
+    # Handle parentheses recursively
+    while '(' in expr:
+        inner = findInnerParens(expr)
+        if inner is None:
+            break
+        start, end = inner
+        sub_expr = expr[start+1:end]
+        val = evaluate(sub_expr)
+        expr = expr[:start] + ('True' if val else 'False') + expr[end+1:]
+    # Process 'not'
+    tokens = expr.split()
+    if tokens[0] == 'not':
+        return not evaluate(' '.join(tokens[1:]))
+    # Process 'and', 'or'
+    if 'and' in tokens:
+        idx = tokens.index('and')
+        left = evaluate(' '.join(tokens[:idx]))
+        right = evaluate(' '.join(tokens[idx+1:]))
+        return left and right
+    if 'or' in tokens:
+        idx = tokens.index('or')
+        left = evaluate(' '.join(tokens[:idx]))
+        right = evaluate(' '.join(tokens[idx+1:]))
+        return left or right
+    # If no operators
+    if tokens[0] == 'True':
+        return True
+    elif tokens[0] == 'False':
+        return False
+    elif tokens[0] == 'x':
+        return x_value
+    elif tokens[0] == 'y':
+        return y_value
+    else:
+        raise ValueError('Invalid expression')
+
+def findInnerParens(expr):
+    stack = []
+    for i, ch in enumerate(expr):
+        if ch == '(':
+            stack.append(i)
+        elif ch == ')':
+            if stack:
+                start = stack.pop()
+                if not stack:
+                    return (start, i)
+    return None
+
 def satisfyExpression(expr):
-    return 42
+    results = []
+    for x_value in [True, False]:
+        for y_value in [True, False]:
+            def eval_expr(e):
+                return evaluate(e)
+            # Replace 'x' and 'y' with true/false
+            expr_eval = expr.replace('x', str(x_value)).replace('y', str(y_value))
+            try:
+                if eval(expr_eval):
+                    results.append((x_value, y_value))
+            except:
+                pass
+    return results
+
 
 def testSatisfyExpression():
     print('Testing satisfyExpression()...', end='')

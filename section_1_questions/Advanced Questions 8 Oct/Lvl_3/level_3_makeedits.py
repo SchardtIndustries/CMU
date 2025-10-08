@@ -87,7 +87,18 @@ E = ['swap row 0 and row 1',
 import copy
 
 def makeEdits(M, E):
-    return 42
+    result = copy.deepcopy(M)
+    for edit in E:
+        parts = edit.split()
+        if parts[1] == 'row':
+            r1, r2 = int(parts[2]), int(parts[5])
+            result[r1], result[r2] = result[r2], result[r1]
+        elif parts[1] == 'col':
+            c1, c2 = int(parts[2]), int(parts[5])
+            for row in result:
+                row[c1], row[c2] = row[c2], row[c1]
+    return result
+
 
 def testMakeEdits():
     print('Testing makeEdits()...', end='')

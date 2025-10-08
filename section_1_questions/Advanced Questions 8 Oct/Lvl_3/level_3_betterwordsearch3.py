@@ -53,7 +53,28 @@ assert(wordSearch(board, 'tow') == "'tow' not found")
 """
 
 def wordSearch(board, word):
-    return 42
+    dirNames = [ [ 'up-left'  ,  'up' , 'up-right'   ],
+                 [ 'left'     ,   ''  , 'right'      ],
+                 [ 'down-left', 'down', 'down-right' ] ]
+    directions = [(-1, -1), (-1, 0), (-1, 1),
+                  (0, -1),          (0, 1),
+                  (1, -1), (1, 0), (1, 1)]
+    rows = len(board)
+    cols = len(board[0]) if rows > 0 else 0
+
+    for r in range(rows):
+        for c in range(cols):
+            for d, (dr, dc) in enumerate(directions):
+                match = True
+                for i in range(len(word)):
+                    rr = (r + dr * i) % rows
+                    cc = (c + dc * i) % cols
+                    if board[rr][cc] != word[i]:
+                        match = False
+                        break
+                if match:
+                    return f"'{word}' is at ({r}, {c}) heading {dirNames[dr + 1][dc + 1]}"
+    return f"'{word}' not found"
 
 def testWordSearch():
     print('Testing wordSearch()...', end='')

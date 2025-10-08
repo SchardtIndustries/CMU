@@ -46,7 +46,27 @@ board = [ [ 1, 1, 2, 3, 3, 3 ],
 """
 
 def isBoxy(board):
-    return 42
+    rows = len(board)
+    cols = len(board[0]) if rows > 0 else 0
+    positions = {}
+    
+    for r in range(rows):
+        for c in range(cols):
+            val = board[r][c]
+            if val not in positions:
+                positions[val] = [r, r, c, c]  # min_row, max_row, min_col, max_col
+            else:
+                positions[val][0] = min(positions[val][0], r)
+                positions[val][1] = max(positions[val][1], r)
+                positions[val][2] = min(positions[val][2], c)
+                positions[val][3] = max(positions[val][3], c)
+    
+    for val, (min_r, max_r, min_c, max_c) in positions.items():
+        for r in range(min_r, max_r + 1):
+            for c in range(min_c, max_c + 1):
+                if board[r][c] != val:
+                    return False
+    return True
 
 def testIsBoxy():
     print('Testing isBoxy()...', end='')
