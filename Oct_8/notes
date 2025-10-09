@@ -1,0 +1,8 @@
+#enumerating a list 
+vehicles = ["ram", "tacoma"]
+drivers = ["nick", "matt"]
+for index in range(len(vehicles)):
+    thisVehicle = vehicles[index]
+    thisDriver = drivers[index]
+    print(f"{thisDriver} drives a {thisVehicle}")
+
