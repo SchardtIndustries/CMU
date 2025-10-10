@@ -43,7 +43,7 @@ L = [(0, 'Spongebob'), (10, 'Krabs'), (30, 'Squidward'),
 import copy
 
 def getHoursLogged(logs):
-    return 42
+    pass
 
 def testGetHoursLogged():
     print('Testing getHoursLogged()...', end='')
