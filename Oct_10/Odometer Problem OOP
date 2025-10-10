@@ -1,0 +1,74 @@
+
+
+class Odometer():
+    def __init__(self, size):
+        self.SIZE = size
+        self.START = int("123455678"[:self.SIZE])
+        self.LIMIT = int("123456789"[-self.SIZE:])
+        self.reading = self.START
+
+    def __str__(self):
+        return f"Odometer({self.reading})"
+    
+    @staticmethod #no self parameter
+    def is_ascending(n):
+        return all([a<b for a,b in zip(str(n), str(n)[1:])])
+    
+    def __repr__(self):
+        return f'{self.START}<{self.reading}<{self.LIMIT}'
+    
+    def after(self, step = 1):
+        for _ in range(step):
+            if self.reading == self.LIMIT:
+                self.reading = self.START
+            else:
+                self.reading += 1
+                while not Odometer.is_ascending(self.reading):
+                    self.reading += 1
+
+    def before(self, step = 1):
+        for _ in range(step):
+            if self.reading == self.START:
+                self.reading = self.LIMIT
+            else:
+                self.reading -= 1
+                while not Odometer.is_ascending(self.reading):
+                    self.reading -= 1
+
+    def distance(self, otherOdometer):
+        if self.SIZE != otherOdometer.SIZE:
+            return -1
+        self_copy = Odometer(self.SIZE)
+        self_copy.reading = self.reading
+        distance = 0
+        while self_copy.reading != otherOdometer.reading:
+            distance += 1
+            self_copy.after()
+        
+
+o = Odometer(4)
+print(o)                        #prints 1234
+o.after()                       #prints 1235
+print(o)                        #prints 1235
+o.after(10)                     #prints 1234<1256<6789
+Odometer.is_ascending(1234)     #True
+Odometer.is_ascending(1233)     #False
+print(Odometer.after(o, 100))  #prints 1234<2345<6789
+print(o)                        #prints 2345
+o.after(4444)                   #prints 1234<6789
+
+p = Odometer(5)
+print(p)                        #prints 12345
+before_reading = p.reading
+p.after(10)                     #prints 12345<12356<67890
+second_reading = p.reading
+p.before(10)                    #prints 12345<12356<67890
+third_reading = p.reading
+print(before_reading == third_reading) #True
+print(second_reading)           #prints 12356
+p.before(44444)                 #prints 12345<67890
+
+s = Odometer(3)
+oo = Odometer(3)
+oo.reading = 789
+assert(s.distance(oo) == 83)    #True
