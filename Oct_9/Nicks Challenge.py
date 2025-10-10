@@ -187,8 +187,182 @@ def test_figureToWords():
     print('Passed!')
 
 
+def figureToWordsIndian(figure: int) -> str:
+    if len(str(figure)) > 12:
+        return "Figure too large, must be less than 1 trillion"
+    if len(str(figure)) == 0:
+        return "Figure cannot be empty"
+    if figure < 0:
+        return "Figure must be a positive integer"
+    else:
+        if figure == 0:
+            return "Zero"
+        else:
+            print(repr(capitalizeFirstLetterOnlyIndian(twelveDigitConvertorIndian(figure))))
+            return capitalizeFirstLetterOnly(twelveDigitConvertor(figure))
+
+def singleDigitConvertorIndian(digit: int) -> str:
+    units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+    return units[digit]
+def twoDigitConvertorIndian(digits: int) -> str:
+    units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+    teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+    tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+    if digits < 10:
+        return singleDigitConvertorIndian(digits)
+    elif 10 <= digits < 20:
+        return teens[digits - 10]
+    else:
+        ten_part = tens[digits // 10]
+        unit_part = units[digits % 10]
+        if unit_part:
+            return f"{ten_part} {unit_part}"
+        else:
+            return ten_part
+def threeDigitConvertorIndian(digits: int) -> str:
+    if digits < 100:
+        return twoDigitConvertorIndian(digits)
+    else:
+        hundred_part = singleDigitConvertorIndian(digits // 100) + " Hundred"
+        rest = digits % 100
+        if rest:
+            return f"{hundred_part} and {twoDigitConvertorIndian(rest)}"
+        else:
+            return hundred_part
+def fourDigitConvertorIndian(digits: int) -> str:
+    if digits < 1000:
+        return threeDigitConvertorIndian(digits)
+    else:
+        thousand_part = singleDigitConvertorIndian(digits // 1000) + " Thousand"
+        rest = digits % 1000
+        if rest:
+            return f"{thousand_part} {threeDigitConvertorIndian(rest)}"
+        else:
+            return thousand_part
+def fiveDigitConvertorIndian(digits: int) -> str:
+    if digits < 10000:
+        return fourDigitConvertorIndian(digits)
+    else:
+        ten_thousand_part = twoDigitConvertorIndian(digits // 1000) + " Thousand"
+        rest = digits % 1000
+        if rest:
+            return f"{ten_thousand_part} {threeDigitConvertor(rest)}"
+        else:
+            return ten_thousand_part
+def sixDigitConvertorIndian(digits: int) -> str:
+    if digits < 100000:
+        return fiveDigitConvertorIndian(digits)
+    else:
+        hundred_thousand_part = threeDigitConvertorIndian(digits // 100000) + " Lakh"
+        rest = digits % 1000
+        if rest:
+            return f"{hundred_thousand_part} {threeDigitConvertorIndian(rest)}"
+        else:
+            return hundred_thousand_part
+def sevenDigitConvertorIndian(digits: int) -> str:
+    if digits < 1000000:
+        return sixDigitConvertorIndian(digits)
+    else:
+        million_part = singleDigitConvertorIndian(digits // 1000000) + " Million"
+        rest = digits % 1000000
+        if rest:
+            return f"{million_part} {sixDigitConvertorIndian(rest)}"
+        else:
+            return million_part
+def eightDigitConvertorIndian(digits: int) -> str:
+    if digits < 10000000:
+        return sevenDigitConvertorIndian(digits)
+    else:
+        ten_million_part = twoDigitConvertorIndian(digits // 1000000) + " Million"
+        rest = digits % 1000000
+        if rest:
+            return f"{ten_million_part} {sixDigitConvertorIndian(rest)}"
+        else:
+            return ten_million_part
+def nineDigitConvertorIndian(digits: int) -> str:
+    if digits < 100000000:
+        return eightDigitConvertorIndian(digits)
+    else:
+        hundred_million_part = threeDigitConvertorIndian(digits // 1000000) + " Million"
+        rest = digits % 1000000
+        if rest:
+            return f"{hundred_million_part} {sixDigitConvertorIndian(rest)}"
+        else:
+            return hundred_million_part
+def tenDigitConvertorIndian(digits: int) -> str:
+    if digits < 1000000000:
+        return nineDigitConvertorIndian(digits)
+    else:
+        billion_part = singleDigitConvertorIndian(digits // 1000000000) + " Billion"
+        rest = digits % 1000000000
+        if rest:
+            return f"{billion_part} {nineDigitConvertorIndian(rest)}"
+        else:
+            return billion_part
+def elevenDigitConvertorIndian(digits: int) -> str:
+    if digits < 10000000000:
+        return tenDigitConvertorIndian(digits)
+    else:
+        ten_billion_part = twoDigitConvertorIndian(digits // 1000000000) + " Billion"
+        rest = digits % 1000000000
+        if rest:
+            return f"{ten_billion_part} {nineDigitConvertorIndian(rest)}"
+        else:
+            return ten_billion_part
+def twelveDigitConvertorIndian(digits: int) -> str:
+    if digits < 100000000000:
+        return elevenDigitConvertorIndian(digits)
+    else:
+        hundred_billion_part = threeDigitConvertorIndian(digits // 1000000000) + " Billion"
+        rest = digits % 1000000000
+        if rest:
+            return f"{hundred_billion_part} {nineDigitConvertorIndian(rest)}"
+        else:
+            return hundred_billion_part
+def capitalizeFirstLetterOnlyIndian(s: str) -> str:
+    if not s:
+        return s
+    return s[0].upper() + s[1:].lower()
+
+def test_figureToWordsIndian():
+    print("Testing figureToWordsIndian()...", end='')
+    # assert(figureToWordsIndian("") == "Figure cannot be empty")  # Empty input
+    # assert(figureToWordsIndian(-5) == "Figure must be a positive integer")  # Negative input
+    # assert(figureToWordsIndian(1000000000000) == "Figure too large, must be less than 1 trillion") # Too large input
+    # assert(figureToWordsIndian(0) == "Zero")
+    # assert(figureToWordsIndian(5) == "Five")
+    # assert(figureToWordsIndian(10) == "Ten")
+    # assert(figureToWordsIndian(32) == "Thirty two")
+    # assert(figureToWordsIndian(99) == "Ninety nine")
+    # assert(figureToWordsIndian(100) == "One hundred")
+    # assert(figureToWordsIndian(101) == "One hundred and one")
+    # assert(figureToWordsIndian(500) == "Five hundred")
+    # assert(figureToWordsIndian(600) == "Six hundred")
+    # assert(figureToWordsIndian(999) == "Nine hundred and ninety nine")
+    # assert(figureToWordsIndian(1000) == "One thousand")
+    # assert(figureToWordsIndian(1001) == "One thousand one")
+    # assert(figureToWordsIndian(1101) == "One thousand one hundred and one")
+    # assert(figureToWordsIndian(1110) == "One thousand one hundred and ten")
+    # assert(figureToWordsIndian(1500) == "One thousand five hundred")
+    # assert(figureToWordsIndian(1567) == "One thousand five hundred and sixty seven")
+    # assert(figureToWordsIndian(10000) == "Ten thousand")
+    # assert(figureToWordsIndian(12345) == "Twelve thousand three hundred and forty five")
+    assert(figureToWordsIndian(100000) == 'One lakh')
+    assert(figureToWordsIndian(123456) == "One lakh twenty three thousand four hundred and fifty six")
+    assert(figureToWordsIndian(1000000) == "Ten lakh")
+    assert(figureToWordsIndian(1234567) == "Twelve lakh thirty four thousand five hundred and sixty seven")
+    assert(figureToWordsIndian(10000000) == "One crore")
+    assert(figureToWordsIndian(12345678) == "Twelve crore thirty four lakh fifty six thousand seven hundred and eighty six")
+    assert(figureToWordsIndian(100000000) == "Ten crore")
+    assert(figureToWordsIndian(123456789) == "Twelve crore thirty four lakh fifty six thousand seven hundred and eighty nine")
+    # 1 kharab = 10^12
+    assert(figureToWordsIndian(1000000000000) == "One kharab")
+    # 1 neel = 10^16
+    assert(figureToWordsIndian(10000000000000000) == "One neel")
+
 def main():
-    test_figureToWords()
+    #test_figureToWords(), 
+    test_figureToWordsIndian()
 
 if __name__ == "__main__":
     main()
