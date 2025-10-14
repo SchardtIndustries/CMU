@@ -31,7 +31,12 @@ non\-interleaved values from the other list. Thus:
 """
 
 def recursiveInterleave(L, M):
-    pass
+    if L == []:
+        return M
+    elif M == []:
+        return L
+    else:
+        return [L[0], M[0]] + recursiveInterleave(L[1:], M[1:])
 
 def testRecursiveInterleave():
     print('Testing recursiveInterleave()...', end='')

@@ -57,10 +57,18 @@ def dealCard(deck):
 def runOneTrial():
     # success = draw 3 cards from a 52 card deck and the cards are
     # not all the same suit and do not contain a pair (same rank).
-    pass
+    deck = makeDeck()
+    hand = [dealCard(deck) for _ in range(3)]
+    ranks = {card[0] for card in hand}
+    suits = {card[1] for card in hand}
+    return len(ranks) == 3 and len(suits) >= 2 
 
 def estimateProbability(trials):
-    pass
+    success = 0
+    for _ in range(trials):
+        if runOneTrial():
+            success += 1
+    return success / trials
 
 def testAntiPokerProblem():
     print('Testing the antiPoker Problem...', end='')

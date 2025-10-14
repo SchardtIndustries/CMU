@@ -29,7 +29,12 @@ For example, `hasSublistSum([1, 6, 2, 8], 3)` returns
 """
 
 def hasSublistSum(L, s):
-    return 42
+    if s == 0:
+        return True
+    elif L == []:
+        return False
+    else:
+        return hasSublistSum(L[1:], s - L[0]) or hasSublistSum(L[1:], s)
 
 def testHasSublistSum():
     print('Testing hasSublistSum()...', end='')

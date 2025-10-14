@@ -56,7 +56,11 @@ sorted list.\*
 """
 
 def powerset(L):
-    return 42
+    if L == []:
+        return [[]]
+    else:
+        subsets = powerset(L[1:])
+        return subsets + [[L[0]] + subset for subset in subsets]
 
 def testIsPowerSet():
     print('Testing isPowerSet()...', end='')

@@ -76,7 +76,15 @@ Hint:
 """
 
 def getCourse(courseCatalog, course):
-    return 42
+    label = courseCatalog[0]
+    for item in courseCatalog[1:]:
+        if isinstance(item, list):
+            subresult = getCourse(item, course)
+            if subresult is not None:
+                return label + '.' + subresult
+        elif item == course:
+            return label + '.' + course
+    return None
 
 def testGetCourse():
     print('Testing getCourse()...', end='')

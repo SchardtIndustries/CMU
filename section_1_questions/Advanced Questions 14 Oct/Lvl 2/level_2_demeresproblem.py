@@ -64,12 +64,18 @@ def rollDie():
 def runOneTrial1():
     # success = getting at least one 6 in four rolls of a single 6-sided die
     # note that we provided the rollDie() function for you (see above).
-    pass
+    for _ in range(4):
+        if rollDie() == 6:
+            return True
+    return False
 
 def runOneTrial2():
     # getting at least one double-six in 24 throws of two dice
     # note that we provided the rollDie() function for you (see above).
-    pass
+    for _ in range(24):
+        if rollDie() == 6 and rollDie() == 6:
+            return True
+    return False
 
 def estimateProbability1(trials):
     successes = 0

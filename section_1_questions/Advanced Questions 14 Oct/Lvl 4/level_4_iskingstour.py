@@ -76,7 +76,28 @@ check if a king's tour is legal.
 """
 
 def isKingsTour(board):
-    return 42
+    def find_position(value, board):
+        for r in range(len(board)):
+            for c in range(len(board[0])):
+                if board[r][c] == value:
+                    return (r, c)
+        return None
+
+    def is_valid_move(r1, c1, r2, c2):
+        return abs(r1 - r2) <= 1 and abs(c1 - c2) <= 1
+
+    def check_tour(current_value):
+        if current_value == len(board) * len(board[0]):
+            return True
+        pos = find_position(current_value, board)
+        if pos is None:
+            return False
+        next_pos = find_position(current_value + 1, board)
+        if next_pos is None or not is_valid_move(pos[0], pos[1], next_pos[0], next_pos[1]):
+            return False
+        return check_tour(current_value + 1)
+
+    return check_tour(1)
 
 def testIsKingsTour():
     print('Testing isKingsTour()...', end='')

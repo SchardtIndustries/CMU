@@ -53,7 +53,10 @@ and you will never run out of offsets.
 """
 
 def addOffsets(offsets, L):
-    return 42
+    if L == []:
+        return []
+    else:
+        return [L[0] + offsets[0]] + addOffsets(offsets[1:] + offsets[:1], L[1:])
 
 def testAddOffsets():
     print('Testing addOffsets()...', end='')

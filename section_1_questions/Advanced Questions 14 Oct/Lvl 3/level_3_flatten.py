@@ -46,7 +46,12 @@ Hints:
 """
 
 def flatten(L):
-    return 42
+    if L == []:
+        return []
+    elif isinstance(L[0], list):
+        return flatten(L[0]) + flatten(L[1:])
+    else:
+        return [L[0]] + flatten(L[1:])
 
 def testFlatten():
     print('Testing flatten()...', end='')
