@@ -15,6 +15,8 @@ This repository contains all my coursework and projects from the CMU TalentSprin
    - Loops
    - Strings and Lists
    - Animations and Games
+      - Pygame
+      - CMU-Graphics
    - Tuples and 2D Lists
    - Sets and Dictionaries
    - Object Oriented Programming
