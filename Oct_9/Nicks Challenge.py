@@ -199,7 +199,7 @@ def figureToWordsIndian(figure: int) -> str:
             return "Zero"
         else:
             print(repr(capitalizeFirstLetterOnlyIndian(twelveDigitConvertorIndian(figure))))
-            return capitalizeFirstLetterOnly(twelveDigitConvertor(figure))
+            return capitalizeFirstLetterOnlyIndian(twelveDigitConvertorIndian(figure))
 
 def singleDigitConvertorIndian(digit: int) -> str:
     units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
