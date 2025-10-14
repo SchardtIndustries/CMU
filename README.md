@@ -21,6 +21,13 @@ This repository contains all my coursework and projects from the CMU TalentSprin
    - Simulation
    - Recursion
    - Efficiency
+   - Data Storage and Retrieval
+      - Data persistence
+      - Geospatial Data
+   -Data Analysis
+      - Pandas
+      - Matplotlib
+
 
 3. **Foundational Web Development with HTML and CSS**
    - Designing and structuring web pages using HTML and styling them with CSS. *(Coming Soon)*
