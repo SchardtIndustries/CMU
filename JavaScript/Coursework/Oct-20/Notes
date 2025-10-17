@@ -1,0 +1,49 @@
+# Websites are built on HTML, CSS, JavaScript and web APIs
+
+JavaScript is an event driven language
+Almost every interactive webpage uses JavaScript
+Frameworks are essential to javascript
+REACT is one of the most popular Frameworks
+REACT works on mobile applications
+
+This course:
+    Learn JavaScript
+    reinforce programming constructs
+    write javascript from basics
+    use control flow capability to write applications
+
+Netscape was the first browser
+    used JavaScript
+    developed in 10 days
+language has evolved
+
+Components of a search engine
+    we will build a tiny search engine
+    web crawler
+        starts at one url and navigates to all urls on that website
+        reads a website, then fetch a website remotely
+        extract all important information
+    search index
+        uses crawler information
+        organizes it in an easy fast manner
+        build a search algorithm
+        rank results
+    store search index
+        prevents repetitive crawls
+
+Command line work
+    ls - listing files and folders in current dir
+    pwd - present working dir
+    mkdir - make dir
+    ls -l - ls + attributes, size, permission
+    man - manual
+    cd - change dir
+    touch - make a new file
+    cat - shows contents of file
+    vim - view in machine (text editor)
+    :wq - write file then quit
+
+node.js
+    sudo apt install nodejs
+    currently installed on my vs code
+    node file_name.js
