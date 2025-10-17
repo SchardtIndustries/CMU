@@ -25,7 +25,7 @@ def maxDigit(n):
     if absolute_n < 10:
         max_digit = absolute_n
         return max_digit
-    elif absolute_n >= 10:
+    else:
         next_digit = maxDigit(absolute_n // 10)
         last_digit = absolute_n % 10
         absolute_n = absolute_n // 10
@@ -34,8 +34,7 @@ def maxDigit(n):
         if last_digit > max_digit:
             max_digit = last_digit
         return max_digit
-    elif absolute_n >= 100:
-        return maxDigit(absolute_n // 10)
+    
 
 
 def testMaxDigit():
