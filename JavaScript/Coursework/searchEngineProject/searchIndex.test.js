@@ -112,4 +112,4 @@ describe('Search Index', () => {
     // Also try spaced query (if your tokenizer normalizes query):
     expect(getPagesForKeyword(index, '   cats   ')).toContain('https://spacey.com');
   });
-});
+ });
