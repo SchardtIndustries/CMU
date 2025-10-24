@@ -1,0 +1,10 @@
+search index
+    design and implement
+    add pages
+    remove pages
+    update pages
+    CLI utilities
+search algorithm
+ranking algorithm
+spider
+CLI

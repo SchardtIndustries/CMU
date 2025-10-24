@@ -1,0 +1,282 @@
+ Tiny Web Search Engine Project 
+ Introduction 
+ You are tasked with building a Tiny Web Search Engine. It helps you gain a deeper 
+ understanding of the Internet and the web. Here’s why: 
+ 1.  Search engines are and continue to be the most valuable web application. 
+ 2.  Building a search engine requires an understanding of how the web works. 
+ 3.  Designing a web search engine requires deeper problem framing, decomposition, 
+ and program design. 
+ 4.  Writing the Data Structures and Algorithms for a search engine is an intellectually 
+ stimulating exercise. 
+ 5.  Building a search engine with JavaScript efficiently addresses multiple learning 
+ outcomes. 
+ There are 5 components to the project: 
+ 1.  Search Index 
+ 2.  Search Algorithm 
+ 3.  Ranking Algorithm 
+ 4.  Spider 
+ 5.  Command Line Interface 
+ Project Scope 
+ The project consists of  five key components  : 
+ 1.  Search Index  : The foundation of the search engine,  which maps keywords to relevant 
+ web pages. 
+ 2.  Search Algorithm  : The process that searches the index  for relevant pages based on 
+ user queries. 
+ 3.  Ranking Algorithm  : Determines the order in which search  results are displayed, 
+ ensuring the most relevant results appear first. 
+ 4.  Spider  : A web crawler that automatically gathers information  from websites for indexing. 
+ 5.  Command Line Interface (CLI)  : A user-friendly interface  that allows users to interact 
+ with the search engine by entering queries and viewing results. 
+ Project Parts 
+ This project is divided into two parts: 
+ Part A: Search Index and Search Algorithm 
+ ●  Search Index  : 
+ Your first task is to design and implement the  Search  Index  , the core data structure that 
+ stores and organizes information extracted from web pages. The focus is on mapping 
+ keywords to relevant web pages to enable efficient searching. As you build this 
+ component, consider the user experience: users should be able to add new pages, 
+ update existing ones, and remove outdated content from the index seamlessly. 
+ ●  Search Algorithm  : 
+ Once the search index is ready, you’ll implement the  Search Algorithm  , which allows 
+ users to enter queries and retrieve the most relevant web pages from the index. The 
+ search algorithm must handle different types of user queries—whether it’s a single 
+ keyword, multiple keywords, or phrases—and return relevant results quickly and 
+ accurately. 
+ Part B: Ranking Algorithm, Spider, and Command Line Interface (CLI) 
+ ●  Ranking Algorithm  : 
+ The next component you’ll develop is the  Ranking Algorithm  .  It’s not enough to find 
+ relevant pages; they must be ordered in a way that the most useful results appear first. 
+ You’ll design a ranking system based on factors such as keyword frequency, keyword 
+ location on the page, and potentially other advanced ranking factors like page popularity. 
+ ●  Spider  : 
+ Your fourth task is to build a  web crawler  (Spider)  that automatically visits websites and 
+ gathers the necessary data for indexing. The spider will navigate the web, discover new 
+ pages, and ensure the search engine stays up to date by collecting and indexing content 
+ efficiently, while respecting the rules set by the websites. 
+ ●  Command Line Interface (CLI)  : 
+ Finally, you’ll create a  Command Line Interface (CLI)  that allows users to interact with 
+ your search engine. This interface will enable users to input queries, display search 
+ results, and refine their searches. The CLI will challenge you to think about how to make 
+ the user experience as simple and intuitive as possible without a graphical interface. 
+ Part A - Detailed Project Specification 
+ Search Index - Learning by Doing 
+ Introduction: 
+ The Search Index is the core of your search engine. It's where you'll store and organize 
+ information about web pages, making it possible to quickly find relevant pages when a user 
+ searches for something. Let's build it step by step, using best practices for user stories, program 
+ design, and testing. 
+ User Stories & BDD Scenarios: 
+ We'll start by defining what our Search Index needs to do from a user's perspective. This 
+ helps us focus on the essential features and avoid unnecessary complexity. 
+ 1.  As a user, I want to be able to add new web pages to the search engine so that I 
+ can expand its knowledge base. 
+ 2.  As a user, I want the search engine to update its information when a web page's 
+ content changes so that the search results remain accurate. 
+ 3.  As a user, I want the search engine to remove outdated or irrelevant web pages so 
+ that the search results are not cluttered. 
+ 4.  As a user, I want to be able to search for information using keywords so that I can 
+ find relevant web pages. 
+ These user stories translate into the following BDD scenarios (written in Gherkin syntax): 
+ Scenario  1: Adding a new page 
+ Given  an empty search index 
+ When  I add a page with URL  "https://www.example.com"  and content  "This is 
+ a  sample web page about dogs" 
+ Then  the search index should contain the keyword  "dogs"  associated with 
+ the  URL  "https://www.example.com" 
+ Scenario  2: Updating a page 
+ Given  a search index containing the keyword  "dogs"  associated with the 
+ URL  "https://www.example.com" 
+ When  I update the page with URL  "https://www.example.com"  to have 
+ the  content  "This is a sample web page about cats" 
+ Then  the search index should no longer contain the keyword 
+ "dogs"  associated with the URL  "https://www.example.com" 
+ And  the search index should contain the keyword  "cats"  associated with 
+ the  URL  "https://www.example.com" 
+ Scenario  3: Removing a page 
+ Given  a search index containing the keyword  "cats"  associated with the 
+ URL  "https://www.example.com" 
+ When  I remove the page with URL  "https://www.example.com"  Then 
+ the search index should no longer contain the keyword  "cats" 
+ associated with the URL  "https://www.example.com" 
+ Scenario  4: Searching for a keyword 
+ Given  a search index containing the keyword  "cats"  associated with the 
+ URL  "https://www.example.com" 
+ When  I search for the keyword  "cats" 
+ Then  the search results should include the URL  "  https://www.example.com  " 
+ Program Design: 
+ Now, let's design the JavaScript functions that will bring these scenarios to life. We'll focus 
+ on modularity and readability to make our code easier to understand and maintain. 
+ createIndex() 
+ ●  Create an empty data structure (e.g., an object or a Map) to store the search index. 
+ Return this empty data structure. 
+ addPageToIndex(index, url, pageContent) 
+ ●  Extract keywords from the  pageContent  . Consider removing common words (stop 
+ words). For each extracted keyword: 
+ ○  If the keyword is not already in the index, create a new entry for it with an 
+ empty list of associated pages. 
+ ○  Add the  url  to the list of pages associated with the keyword. 
+ updatePageInIndex(index, url, newPageContent) 
+ ●  Remove all references to the given  url  from the index (as if you were removing 
+ the page). Add the page back to the index with the new content using 
+ addPageToIndex  . 
+ removePageFromIndex(index, url) 
+ ●  For each keyword in the index: 
+ ○  If the  url  is in the list of pages associated with the keyword, remove it. 
+ ○  If the keyword has no more associated pages after removing the  url  , 
+ remove the keyword entry from the index entirely. 
+ getPagesForKeyword(index, keyword) 
+ ●  If the  keyword  exists in the index, return the list of pages 
+ associated with it. Otherwise, return an empty array. 
+ Helper Function: 
+ extractKeywords(pageContent) 
+ ●  Implement the logic to extract keywords from the given  pageContent  . This might 
+ involve tokenization, stop word removal, stemming/lemmatization, or other 
+ techniques as you see fit. 
+ Test Cases 
+ const  { 
+ createIndex, 
+ addPageToIndex, 
+ updatePageInIndex, 
+ removePageFromIndex, 
+ getPagesForKeyword 
+ } =  require  (  './searchIndex'  );  // Assuming your code  is in a file  named 
+ 'searchIndex.js' 
+ describe(  'Search Index'  , () => { 
+ let  index; 
+ beforeEach(() => { 
+ index = createIndex(); 
+ }); 
+ // Scenario 1: Adding a new page 
+ it(  'should add a new page to the index'  , () => { 
+ addPageToIndex(index,  'https://www.example.com'  ,  'This  is a 
+ sample  web page about dogs'  ); 
+ expect(getPagesForKeyword(index, 
+ 'dogs'  )).toContain(  'https://www.example.com'  ); 
+ }); 
+ // Scenario 2: Updating a page 
+ it(  'should update a page in the index'  , () => { 
+ addPageToIndex(index,  'https://www.example.com'  ,  'This  is a 
+ sample  web page about dogs'  ); 
+ updatePageInIndex(index,  'https://www.example.com'  ,  'This is 
+ a  sample web page about cats'  ); 
+ expect(getPagesForKeyword(index, 
+ 'dogs'  )).not.toContain(  'https://www.example.com'  ); 
+ expect(getPagesForKeyword(index, 
+ 'cats'  )).toContain(  'https://www.example.com'  ); 
+ }); 
+ // Scenario 3: Removing a page 
+ it(  'should remove a page from the index'  , () => { 
+ addPageToIndex(index,  'https://www.example.com'  ,  'This  is a 
+ sample  web page about cats'  ); 
+ removePageFromIndex(index,  'https://www.example.com'  ); 
+ expect(getPagesForKeyword(index, 
+ 'cats'  )).not.toContain(  'https://www.example.com'  ); 
+ }); 
+ // Scenario 4: Searching for a keyword 
+ it(  'should return relevant pages for a keyword'  , ()  => { 
+ addPageToIndex(index,  'https://www.example.com'  ,  'This  is a 
+ sample  web page about cats'  ); 
+ expect(getPagesForKeyword(index, 
+ 'cats'  )).toContain(  'https://www.example.com'  ); 
+ }); 
+ // Additional test cases to consider: 
+ // - Handling multiple pages with the same keyword 
+ // - Handling case sensitivity (or insensitivity) in keyword 
+ matching  // - Handling empty page content or invalid  URLs 
+ // - ... (Add more test cases as needed based on the project 
+ requirements and potential edge cases) 
+ }); 
+ Search Algorithm - Learning by Doing 
+ Introduction: 
+ The Search Algorithm takes a user's query and scours the Search Index to find the 
+ most relevant web pages. 
+ User Stories & BDD Scenarios: 
+ Let's first define the behavior we expect from the Search Algorithm from a user's perspective: 
+ 1.  As a user, I want to be able to search for information using one or more 
+ keywords. 
+ 2.  As a user, I want the search engine to return relevant web pages that contain the 
+ keywords I searched for. 
+ 3.  As a user, I want the search engine to handle different types of queries, including 
+ single keywords, multiple keywords, and phrases. 
+ These user stories can be translated into the following BDD scenarios: 
+ Scenario  1: Searching for a single keyword 
+ Given  a search index containing the keyword  "cats"  associated with the 
+ URL  "https://www.example.com/cats" 
+ When  I search for the keyword  "cats" 
+ Then  the search results should include the URL 
+ "https://www.example.com/cats" 
+ Scenario  2: Searching for multiple keywords 
+ Given  a search index containing the keyword  "dogs"  associated with the 
+ URL  "https://www.example.com/dogs" 
+ And  the keyword  "training"  associated with the URLs 
+ "https://www.example.com/dogs"  and 
+ "https://www.training.com"  When  I search for the keywords 
+ "dogs training" 
+ Then  the search results should include the URL 
+ "https://www.example.com/dogs" 
+ Scenario  3: Searching for a phrase 
+ Given  a search index containing the phrase  "machine  learning" 
+ associated  with the URL  "https://www.example.com/ml" 
+ When  I search for the phrase  "machine learning" 
+ Then  the search results should include the URL  "https://www.example.com/ml" 
+ Program Design: 
+ Now, let's outline the JavaScript function that will implement this search 
+ search  (  index  , query) 
+ Inputs: 
+ - index: The Search Index you created earlier 
+ - query: The user's search query (a string of keywords) 
+ Outputs: 
+ - An array of URLs representing the web pages most relevant to the query. 
+ How it Works: 
+ 1. Process the Query: 
+ a. Break down the query into individual keywords or phrases 
+ b. Consider removing common words (stop words) that don't add much meaning to 
+ the search (e.g., "the", "and"). 
+ 2. Search the Index: 
+ a. For each keyword/phrase in the processed query: 
+ b. Use the getPagesForKeyword function (from your Search Index component) to 
+ retrieve the list of URLs associated with that keyword/phrase 
+ 3. Combine Results: 
+ a. You'll likely have multiple lists of URLs (one for each keyword/phrase in the 
+ query). 
+ b. Decide how to combine these lists to get the final set of relevant pages i. Option 
+ 1: Intersection - Keep only the URLs that appear in *all* the lists. This is stricter 
+ and ensures all keywords are present on the resulting 
+ pages 
+ ii. Option 2: Union - Combine all the URLs into a single list, removing 
+ duplicates. This is broader and includes pages that match at least one 
+ of the keywords 
+ c. Consider other approaches based on your desired search logic 
+ 4. Return Results: 
+ a. Return the final list of relevant URLs 
+ Test Cases 
+ describe(  'Search Algorithm'  , () => { 
+ let  index; 
+ beforeEach(() => { 
+ index = createIndex(); 
+ // Populate the index with some sample data for testing 
+ addPageToIndex(index,  'https://www.example.com/cats'  ,  'This is a 
+ page  about cats'  ); 
+ addPageToIndex(index,  'https://www.example.com/dogs'  ,  'This is a 
+ page  about dogs and training'  ); 
+ addPageToIndex(index,  'https://www.training.com'  ,  'This is a 
+ general  training website'  ); 
+ addPageToIndex(index,  'https://www.example.com/ml'  ,  'This is a 
+ page  about machine learning'  ); 
+ }); 
+ it(  'should return relevant pages for a single keyword  search'  , () => 
+ {  const  results = search(index,  'cats'  ); 
+ expect(results).toContain(  'https://www.example.com/cats'  ) 
+ ;  }); 
+ it(  'should return relevant pages for a multiple keyword  search'  , () => 
+ {  const  results = search(index,  'dogs training'  ); 
+ expect(results).toContain(  'https://www.example.com/dogs'  );  // 
+ Depending on your combination logic, it might or might not include 
+ 'https://www.training.com' 
+ }); 
+ it(  'should return relevant pages for a phrase search'  ,  () => 
+ {  const  results = search(index,  'machine learning'  ); 
+ expect(results).toContain(  'https://www.example.com/ml'  ); 
+ }); 
+ // Add more test cases to cover other scenarios and edge cases 
+ }); 
