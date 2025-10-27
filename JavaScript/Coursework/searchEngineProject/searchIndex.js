@@ -100,9 +100,6 @@ function getPagesForKeyword(index, keyword) {
  */
 function extractKeywords(pageContent) {
   if (!pageContent) return new Set();
-
-  // \b\w+\b matches word-like tokens (letters, numbers, underscore)
-  // toLowerCase ensures case-insensitivity
   const words = pageContent.toLowerCase().match(/\b\w+\b/g) || [];
   return new Set(words);
 }
