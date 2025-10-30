@@ -1,31 +1,10 @@
-/**
- * searchIndex.js
- * 
- * A simple in-memory search index implementation.
- * 
- * Each keyword maps to a set of URLs whose page content contains that keyword.
- * The index supports adding, updating, removing, and retrieving pages
- * based on the words found in their content.
- */
 
-/**
- * Creates a new empty index.
- * @returns {Map<string, Set<string>>} A Map where keys are keywords and values are Sets of URLs.
- */
 function createIndex() {
   // The main data structure: Map<keyword, Set<URL>>
   return new Map();
 }
 
-/**
- * Adds a page’s content to the index.
- * Splits the content into keywords, normalizes them,
- * and associates each keyword with the given URL.
- *
- * @param {Map<string, Set<string>>} index - The current search index.
- * @param {string} URL - The page URL being indexed.
- * @param {string} pageContent - The text content of the page.
- */
+
 function addPageToIndex(index, URL, pageContent) {
   const keywords = extractKeywords(pageContent);
 
@@ -39,27 +18,11 @@ function addPageToIndex(index, URL, pageContent) {
   }
 }
 
-/**
- * Updates a page’s content in the index.
- * Effectively removes the old version of the page (to prevent stale keywords)
- * and then re-adds it with the new content.
- *
- * @param {Map<string, Set<string>>} index - The search index.
- * @param {string} URL - The URL of the page to update.
- * @param {string} newContent - The updated page content.
- */
 function updatePageInIndex(index, URL, newContent) {
   removePageFromIndex(index, URL);
   addPageToIndex(index, URL, newContent);
 }
 
-/**
- * Removes all references to a page (by URL) from the index.
- * If a keyword no longer has any URLs after removal, it is deleted entirely.
- *
- * @param {Map<string, Set<string>>} index - The search index.
- * @param {string} URL - The page URL to remove.
- */
 function removePageFromIndex(index, URL) {
   for (const [keyword, urls] of index.entries()) {
     if (urls.has(URL)) {
@@ -72,14 +35,7 @@ function removePageFromIndex(index, URL) {
   }
 }
 
-/**
- * Retrieves all page URLs that contain a given keyword.
- * Trims and lowercases the keyword to ensure case-insensitive matching.
- *
- * @param {Map<string, Set<string>>} index - The search index.
- * @param {string} keyword - The search keyword.
- * @returns {string[]} An array of URLs containing that keyword.
- */
+
 function getPagesForKeyword(index, keyword) {
   const normalized = String(keyword).trim().toLowerCase();
   if (normalized.length === 0) return [];
@@ -91,18 +47,37 @@ function getPagesForKeyword(index, keyword) {
   return [];
 }
 
-/**
- * Extracts keywords from a page’s text content.
- * Converts all words to lowercase and filters out punctuation and duplicates.
- *
- * @param {string} pageContent - The full text content of a page.
- * @returns {Set<string>} A Set of lowercase keywords.
- */
+// Replace your extractKeywords with this version
 function extractKeywords(pageContent) {
   if (!pageContent) return new Set();
-  const words = pageContent.toLowerCase().match(/\b\w+\b/g) || [];
-  return new Set(words);
+
+  const STOPWORDS = new Set([
+    'a','an','the','and','or','but','if','then','else','of','for','on','in','to','from','by',
+    'with','about','as','at','into','like','through','after','over','between','out','against',
+    'during','without','before','under','around','among','is','are','was','were','be','been',
+    'being','do','does','did','doing','have','has','had','having','i','you','he','she','it',
+    'we','they','me','him','her','them','my','your','his','their','our','mine','yours','ours',
+  ]);
+
+  const words = String(pageContent).toLowerCase().match(/\b\w+\b/g) || [];
+
+  const stem = (w) => {
+    // super naive: strip trailing 's' or 'es'
+    if (w.endsWith('ies') && w.length > 3) return w.slice(0, -3) + 'y'; // "stories" -> "story"
+    if (w.endsWith('es') && w.length > 2) return w.slice(0, -2);        // "classes" -> "class"
+    if (w.endsWith('s') && w.length > 1)  return w.slice(0, -1);        // "cats" -> "cat"
+    return w;
+  };
+
+  const set = new Set();
+  for (const raw of words) {
+    if (STOPWORDS.has(raw)) continue;
+    const s = stem(raw);
+    if (s) set.add(s);
+  }
+  return set;
 }
+
 
 // Export all public functions
 module.exports = {

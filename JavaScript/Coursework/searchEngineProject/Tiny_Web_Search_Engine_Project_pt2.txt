@@ -1,0 +1,266 @@
+Part B - Detailed Project Specification
+ Ranking Algorithm Component: Learning by Doing
+ Introduction:
+ The Ranking Algorithm is the judge of your search engine. It decides which search results are
+ the most relevant to the user's query and presents them in order of importance. This
+ component is what separates a good search engine from a great one, ensuring that users find
+ the most useful and informative pages at the top of their search results.
+ User Stories & BDD Scenarios:
+ Let's define what we expect from the Ranking Algorithm from a user's perspective:
+ ● As a user, I want the search results to be sorted by relevance, with the most relevant
+ pages appearing first.
+ ● As a user, I want the search engine to consider factors like keyword frequency and
+ location when determining relevance.
+ ● As a user, I want the search engine to potentially consider other factors like page
+ popularity or authority in the future (advanced).
+ These user stories translate into the following BDD scenarios:
+ Scenario  1: Ranking based on keyword frequency
+ Given  a search index containing:
+ *  The keyword  "cats"  associated with the URLs
+ "https://www.example.com/cats"  and  "https://www.example.com/pets"  *  The
+ URL  "https://www.example.com/cats"  contains the keyword  "cats"  3  times
+ *  The URL  "https://www.example.com/pets"  contains  the keyword  "cats"
+ 1  time
+ When  I search for the keyword  "cats"
+ Then  the search results should be ranked with
+ "https://www.example.com/cats"  appearing before
+ "https://www.example.com/pets"
+ Scenario  2: Ranking based on keyword location (e.g.,
+ title)  Given  a search index containing:
+ *  The keyword  "dogs"  associated with the URLs
+
+--- PAGE BREAK ---
+
+ "https://www.example.com/dogs"  and  "https://www.example.com/animals"  *  The
+ title of  "https://www.example.com/dogs"  contains the keyword  "dogs"  *  The
+ body of  "https://www.example.com/animals"  contains  the keyword  "dogs"
+ When  I search for the keyword  "dogs"
+ Then  the search results should be ranked with
+ "https://www.example.com/dogs"  appearing before
+ "https://www.example.com/animals"
+ Program Design:
+ rankSearchResults  (index, query, searchResults)
+ Inputs:
+ - index: The Search Index
+ - query: The user's search query
+ - searchResults: An array of URLs returned by the Search Algorithm
+ Outputs:
+ - An array of URLs from searchResults, but sorted in descending order of relevance to the
+ query
+ How it Works:
+ 1. Calculate Relevance Scores:
+ a. For each URL in searchResults
+ i. Fetch the content of the page (you'll need to implement a way to do this,
+ possibly using a simplified version of the Spider component or
+ providing
+ pre-fetched content for learning purposes)
+ ii. Calculate a relevance score based on the chosen factors. Consider: 1.
+ Keyword Frequency: How often do the query keywords appear on
+ the page? More frequent occurrences generally indicate higher
+ relevance
+ 2. Keyword Proximity: Are the keywords close together on the page?
+ Closer proximity can suggest stronger relevance
+ 3. Keyword Location: Are the keywords in important sections of the
+ page (e.g., title, headings)? Keywords in prominent positions are
+ often more significant
+ 4. TF-IDF: (Term Frequency-Inverse Document Frequency) This
+ technique weighs the importance of a term within a document and
+ across the entire collection of documents. Terms that appear
+ frequently in a document but rarely in others are considered more
+ important
+ 5. Page Importance: (Optional, advanced) Is the page itself
+
+--- PAGE BREAK ---
+
+ considered important or authoritative? This can involve analyzing
+ backlinks or other metrics
+ iii. Sort Results:
+ 1. Sort the searchResults array based on the calculated relevance
+ scores in descending order (most relevant first)
+ iv. Return Ranked Results:
+ 1. Return the sorted array of URLs
+ Test Cases
+ describe(  'Ranking Algorithm'  , () => {
+ let  index;
+ beforeEach(() => {
+ index = createIndex();
+ // Populate the index with sample data, ensuring variations in
+ keyword  f  requency and location
+ });
+ it(  'should rank results based on keyword frequency'  ,  () => {  //
+ Add pages to the index with varying keyword frequencies  const
+ results = search(index,  'cats'  );  // Assuming you have  the  'search'
+ function from the Search Algorithm component
+ const  rankedResults = rankSearchResults(index,  'cats'  ,  results);  //
+ Assert that the page with higher keyword frequency is ranked first  });
+ it(  'should rank results based on keyword location'  ,  () => {  // Add
+ pages to the index with keywords in different locations (title,  body)
+ const  results = search(index,  'dogs'  );
+ const  rankedResults = rankSearchResults(index,  'dogs'  ,  results);  //
+ Assert that the page with the keyword in the title is ranked first  });
+ // Add more test cases to cover other ranking factors
+ });
+ Notes on Relevance Scores
+ ● Relevance Scores: Think of these as a way to quantify how well each search result
+ matches the user's query. Higher scores mean a better match.
+ ● Factors: We use multiple factors to calculate the relevance score, each contributing to
+ the overall assessment.
+ ● Weighting: Some factors might be more important than others. You can assign weights
+ to each factor to adjust their influence on the final score.
+
+--- PAGE BREAK ---
+
+ ● TF-IDF: This is a powerful technique that helps identify keywords that are particularly
+ relevant to a specific page compared to the entire collection of pages in your index. It
+ downplays common words that appear in many documents and emphasizes terms
+ that are unique or distinctive to a particular page
+ Spider Component: Learning by Doing
+ Introduction:
+ The Spider, also known as a web crawler, is the explorer of your search engine. It ventures
+ out onto the web, visiting websites and collecting information to populate your Search Index.
+ This component is essential for keeping your search engine up-to-date and providing users
+ with access to the latest information.
+ User Stories & BDD Scenarios:
+ Let's define what we expect from the Spider:
+ ● As a user, I want the search engine to automatically discover and index new web pages.
+ ● As a user, I want the search engine to respect websites' rules and avoid overloading their
+ servers.
+ ● As a user, I want the search engine to be able to follow links on web pages to discover
+ more content.
+ Scenario  1: Crawling a single page
+ Given  a starting URL  "https://www.example.com"
+ When  the spider crawls the web starting from this  URL
+ Then  the search index should contain information from
+ "https://www.example.com"
+ Scenario  2: Following links
+ Given  a web page at  "https://www.example.com"  containing  a link to
+ "https://www.example.com/about"
+ When  the spider crawls the web starting from
+ "https://www.example.com"  Then  the search index should  contain
+ information from both  "https://www.example.com"  and
+ "https://www.example.com/about"
+ Scenario  3: Respecting robots.txt
+ Given  a website with a robots.txt file disallowing crawling of
+ "/private"  When  the spider crawls the web starting from the website's
+ homepage  Then  the spider should not attempt to crawl any URLs under
+ "/private"
+
+--- PAGE BREAK ---
+
+ Program Design:
+ Now let's design the JavaScript functions that will power the Spider:
+ crawl  (startingUrl, index)
+ Inputs:
+ - startingUrl: The URL where the spider should begin crawling
+ - index: The Search Index to populate
+ Outputs:
+ - None (the function modifies the index in-place)
+ How it Works:
+ 1. Fetch robots.txt:
+ a. If available, fetch and parse the robots.txt file from the website to identify any
+ disallowed paths
+ 2. Fetch and Process Starting Page
+ a. Fetch the HTML content of the startingUrl
+ b. Extract the text content from the HTML
+ c. Extract all the links (URLs) from the HTML
+ d. Add the page to the index using addPageToIndex (from the Search Index
+ component)
+ 3. Crawl Linked Pages (Recursive)
+ a. For each extracted link
+ b. If the link is allowed to be crawled (based on robots.txt and other criteria like
+ avoiding infinite loops or staying within the same domain)
+ c. Call crawl(link, index) recursively to crawl this linked page
+ Important Considerations:
+ - Politeness: Respect websites' robots.txt files and avoid making too many requests in a
+ short period
+ - Robustness: Handle errors gracefully (e.g., network issues, invalid HTML) -
+ Efficiency: Optimize the crawling process to avoid redundant visits and prioritize
+ important pages
+ - Data Extraction: Implement logic to extract relevant text content and links from HTML -
+ Scope Control: Decide on criteria to limit the scope of crawling (e.g., maximum number of
+ pages, depth of recursion, staying within the same domain)
+ Test Cases
+ describe(  'Spider'  , () => {
+ let  index;
+
+--- PAGE BREAK ---
+
+ beforeEach(() => {
+ index = createIndex();
+ });
+ it(  'should crawl a single page and add it to the index'  ,  () =>
+ {  // Mock or provide a simple HTML page for testing
+ crawl(  'https://www.example.com'  , index);
+ // Assert that the index contains information from the crawled
+ page  });
+ it(  'should follow links and crawl multiple pages'  ,  () =>
+ {  // Mock or provide HTML pages with links for testing
+ crawl(  'https://www.example.com'  , index);
+ // Assert that the index contains information from multiple
+ crawled  p  ages
+ });
+ it(  'should respect robots.txt and avoid disallowed  paths'  , () =>
+ {  // Mock a robots.txt file and HTML pages for testing
+ crawl(  'https://www.example.com'  , index);
+ // Assert that the spider did not attempt to crawl disallowed
+ paths  });
+ // Add more test cases to cover other scenarios and edge cases
+ });
+ Command Line Interface (CLI) Component: Learning by
+ Doing
+ Introduction:
+ The Command Line Interface (CLI) is the gateway to your search engine. It allows users to
+ interact with your search engine, enter queries, and view the results. While it might not be
+ as flashy as a graphical user interface, a well-designed CLI can be powerful and efficient.
+ User Stories & BDD Scenarios:
+ Let's define what we expect from the CLI:
+ ● As a user, I want to be able to enter search queries through the command line. ● As a
+ user, I want to see the search results displayed in a clear and organized manner. ● As a
+
+--- PAGE BREAK ---
+
+ user, I want to be able to exit the search engine gracefully.
+ Scenario  1: Entering a search query
+ When  I run the search engine from the command line
+ And  I enter the query  "cats"
+ Then  the search engine should display relevant search  results
+ Scenario  2: Viewing search results
+ Given  I have entered a search query
+ Then  the search engine should display a list of URLs  relevant to the query
+ Scenario  3: Exiting the search engine
+ When  I enter the command  "exit"
+ Then  the search engine should terminate gracefully
+ Program Design:
+ 1. Set up the CLI:
+ ○ Use a Node.js library (like  readline  ) to create  a command-line interface that
+ can take input from the user and display output to the console.
+ ○ Print a welcome message to greet the user when the search engine starts
+ 2. Handle User Input:
+ ○ Continuously prompt the user to enter a search query or a command
+ ○ Read the user's input from the console
+ ○ If the input is the "exit" command:
+ ■ Close the command-line interface
+ ■ Terminate the search engine gracefully
+ 3. Process Search Queries:
+ ○ If the input is a search query:
+ ■ Use the  search  function (from the Search Algorithm  component) to get
+ the search results from the index
+ ■ Use the  rankSearchResults  function (from the Ranking  Algorithm
+ component) to rank the search results by relevance
+ ■ If there are search results
+ ■ Print a heading like "Search Results:"
+ ■ Display each search result (URL) in a clear and organized manner
+ ■ If there are no search results
+ ■ Print a message indicating that no results were found
+ 4. Repeat or Exit:
+ ○ After processing the input (search query or exit command)
+
+--- PAGE BREAK ---
+
+ ■ If the user did not enter the "exit" command, prompt them for another
+ input
+ ■ If the user entered the "exit" command, the search engine will have
+ already terminated in step 2
+ By building the CLI, learners will complete their miniature search engine, enabling them to
+ interact with it and see the results of their hard work. It's a fulfilling culmination of the project
+ and a testament to their newfound skills in search engine development.

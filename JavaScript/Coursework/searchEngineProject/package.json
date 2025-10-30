@@ -1,10 +1,11 @@
 {
   "name": "searchengineproject",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "description": "",
   "main": "searchIndex.js",
   "scripts": {
+    "start": "node cli.js",
     "test": "jest"
   },
   "keywords": [],
