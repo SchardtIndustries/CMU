@@ -29,6 +29,12 @@ export function showPies(allPies, piesLength) {
     } available:\n${allPies.join("\n")}`
   );
 }
-export function atePie(eatenPie) {}
-export function noSuchPie(requestedPie) {}
 
+// NEW: success / error messages for eating a pie
+export function atePie(eatenPie) {
+  console.log(`you ate the ${eatenPie} pie—yum!`);
+}
+
+export function noSuchPie(requestedPie) {
+  console.log(`sorry, we don't have a ${requestedPie} pie`);
+}

@@ -1,7 +1,6 @@
 const pies = ["tomatillo"]; // our in memory database
 
 function randomDelay(callback) {
-  // simulates network call to a real database so we have a reason to need callbacks
   setTimeout(function timedOut() {
     callback();
   }, Math.random() * 2000);
@@ -20,8 +19,15 @@ export function getPies(cb) {
   });
 }
 
-export function deletePie(chosenPie, cb) {}
-// pass this function a 2-parameter, error-first callback // (err, data)=>{}
-// to handle the exceptional case if the pie isn't in the pies array
-// or the happy path if such a pie is available
-
+// NEW: error-first delete (eat) a pie
+export function deletePie(chosenPie, cb) {
+  randomDelay(function () {
+    const idx = pies.indexOf(chosenPie);
+    if (idx === -1) {
+      // error-first: pass an Error as first arg
+      return cb(new Error("No such pie: " + chosenPie));
+    }
+    const [eaten] = pies.splice(idx, 1);
+    cb(null, eaten, pies.length); // success path: err=null
+  });
+}

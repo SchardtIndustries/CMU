@@ -27,10 +27,10 @@ const functions = {
 
 // Redefine this object so the logs print in order
 const fun = {
-  foo: functions.placeholder,
-  bar: functions.placeholder,
-  baz: functions.placeholder,
-  qux: functions.placeholder,
+  foo: functions.timeout1000,  // 4,5 after 1s
+  bar: functions.timeout0,     // 3 next tick after 2
+  baz: functions.timeout1000,  // 7 after 6
+  qux: functions.placeholder,  // 2,6,8 immediate when called
 };
 //Only redefine the above object
 
