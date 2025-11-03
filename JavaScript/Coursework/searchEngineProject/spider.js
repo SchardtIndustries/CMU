@@ -114,6 +114,7 @@ function extractLinks(baseUrl, html) {
   }
   return links;
 }
+//  parse dom find a tags 
 
 function normalizeUrl(raw) {
   try {
